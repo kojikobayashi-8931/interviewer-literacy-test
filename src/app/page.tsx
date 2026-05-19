@@ -9,67 +9,145 @@ export default function TopPage() {
     <div className="bg-base">
 
       {/* Hero */}
-      <section className="bg-gradient-to-br from-main to-[#1a2a3a] text-white">
-        <div className="max-w-4xl mx-auto px-6 py-16 md:py-24 text-center">
-          <p className="text-accent-light font-body text-sm font-semibold tracking-widest uppercase mb-4">
-            NODIA 採用面接官リテラシー診断
-          </p>
-          <h1 className="font-body text-3xl md:text-5xl font-bold leading-tight mb-6">
-            面接官としての現在地を知る。
-          </h1>
-          <p className="text-white text-opacity-80 font-body text-base md:text-lg mb-10 max-w-xl mx-auto leading-relaxed">
-            採用面接官に必要な知識・リテラシーを29問で診断。<br className="hidden md:block" />
-            正解率で5段階の段位を判定します。
-          </p>
+      <section className="relative overflow-hidden bg-main">
+        {/* 背景デコレーション */}
+        <div className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-10" style={{ background: "#2D8B92", transform: "translate(30%, -30%)" }} />
+        <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full opacity-10" style={{ background: "#2D8B92", transform: "translate(-30%, 30%)" }} />
 
-          {/* Stats */}
-          <div className="inline-flex items-center gap-8 bg-white bg-opacity-10 backdrop-blur rounded-2xl px-10 py-5 mb-10">
-            <div className="text-center">
-              <p className="text-2xl font-bold font-body text-white">29問</p>
-              <p className="text-xs font-body text-white text-opacity-70 mt-1">問題数</p>
+        <div className="relative max-w-4xl mx-auto px-6 py-16 md:py-24">
+          <div className="text-center">
+            {/* バッジ */}
+            <div className="inline-flex items-center gap-2 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-full px-4 py-2 mb-8">
+              <span className="w-2 h-2 rounded-full bg-[#2D8B92] animate-pulse" />
+              <span className="text-white font-body text-xs font-semibold tracking-wider">
+                NODIA 面接NG発言チェッカー
+              </span>
             </div>
-            <div className="w-px h-10 bg-white bg-opacity-30" />
-            <div className="text-center">
-              <p className="text-2xl font-bold font-body text-white">9カテゴリ</p>
-              <p className="text-xs font-body text-white text-opacity-70 mt-1">出題領域</p>
-            </div>
-            <div className="w-px h-10 bg-white bg-opacity-30" />
-            <div className="text-center">
-              <p className="text-2xl font-bold font-body text-white">約15分</p>
-              <p className="text-xs font-body text-white text-opacity-70 mt-1">所要時間</p>
-            </div>
-          </div>
 
-          <div>
+            {/* メインキャッチ */}
+            <h1 className="font-body font-bold text-white leading-tight mb-4">
+              <span className="block text-4xl md:text-6xl mb-2">
+                その質問、
+              </span>
+              <span
+                className="block text-5xl md:text-7xl font-black"
+                style={{ color: "#A8D8DC" }}
+              >
+                アウト
+              </span>
+              <span className="block text-4xl md:text-6xl mt-2">
+                かもしれません。
+              </span>
+            </h1>
+
+            <p className="text-white font-body text-base md:text-lg mb-4 max-w-lg mx-auto leading-relaxed" style={{ opacity: 0.75 }}>
+              法的NGな質問・確約まがい発言・ハラスメント…<br className="hidden md:block" />
+              29問で面接リテラシーを診断し、段位で判定します。
+            </p>
+
+            {/* Stats */}
+            <div className="flex items-center justify-center gap-6 mb-10">
+              {[
+                { value: "29問", label: "問題数" },
+                { value: "9カテゴリ", label: "出題領域" },
+                { value: "約15分", label: "所要時間" },
+              ].map((s, i) => (
+                <div key={i} className="flex items-center gap-6">
+                  <div className="text-center">
+                    <p className="text-xl md:text-2xl font-bold font-body text-white">{s.value}</p>
+                    <p className="text-xs font-body mt-0.5" style={{ color: "#A8D8DC", opacity: 0.8 }}>{s.label}</p>
+                  </div>
+                  {i < 2 && <div className="w-px h-8 bg-white" style={{ opacity: 0.2 }} />}
+                </div>
+              ))}
+            </div>
+
+            {/* CTA */}
             <Link href="/test">
-              <button className="bg-accent text-white font-body font-bold text-lg px-12 py-4 rounded-xl shadow-lg hover:shadow-xl hover:opacity-90 transition-all duration-200 active:scale-95">
-                診断を開始する →
+              <button
+                className="font-body font-bold text-lg px-12 py-4 rounded-xl shadow-xl transition-all duration-200 active:scale-95 hover:scale-105"
+                style={{ backgroundColor: "#2D8B92", color: "#fff" }}
+              >
+                チェックを開始する →
               </button>
             </Link>
-            <p className="text-white text-opacity-50 font-body text-xs mt-3">
+            <p className="font-body text-xs mt-3" style={{ color: "#A8D8DC", opacity: 0.6 }}>
               無料・登録不要
             </p>
           </div>
         </div>
       </section>
 
-      {/* 段位紹介 */}
-      <section className="bg-white py-14">
+      {/* NGワーニングバナー */}
+      <section style={{ backgroundColor: "#2D8B92" }} className="py-5">
         <div className="max-w-4xl mx-auto px-6">
-          <p className="text-center text-accent font-body text-sm font-semibold tracking-widest uppercase mb-2">RANK</p>
+          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-10">
+            {[
+              "家族・出身について聞いた",
+              "結婚・出産の予定を聞いた",
+              "「ほぼ内定」と伝えた",
+              "他社の辞退を勧めた",
+            ].map((text) => (
+              <div key={text} className="flex items-center gap-2">
+                <span className="text-white font-bold text-sm">⚠</span>
+                <span className="text-white font-body text-sm">{text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* こんな人に */}
+      <section className="bg-white py-16">
+        <div className="max-w-4xl mx-auto px-6">
+          <p className="text-center font-body text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: "#2D8B92" }}>FOR WHO</p>
           <h2 className="text-center font-body text-2xl font-bold text-main mb-10">
+            こんな面接官に受けてほしい
+          </h2>
+          <div className="grid md:grid-cols-3 gap-5">
+            {[
+              { icon: "😰", title: "NG質問か自信がない", desc: "どこまで聞いていいのか判断できていない" },
+              { icon: "📋", title: "研修を受けたことがない", desc: "面接官トレーニングを受けずに面接に入っている" },
+              { icon: "⚖️", title: "法的リスクを知りたい", desc: "NGな発言が法令違反につながるリスクを把握したい" },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="rounded-2xl p-6 border-2 border-border hover:border-[#2D8B92] transition-colors"
+              >
+                <span className="text-4xl mb-4 block">{item.icon}</span>
+                <h3 className="font-body font-bold text-main text-base mb-2">{item.title}</h3>
+                <p className="font-body text-text text-sm leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 段位紹介 */}
+      <section className="py-16" style={{ backgroundColor: "#F7F9FA" }}>
+        <div className="max-w-4xl mx-auto px-6">
+          <p className="text-center font-body text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: "#2D8B92" }}>RANK</p>
+          <h2 className="text-center font-body text-2xl font-bold text-main mb-3">
             5段階の段位で判定
           </h2>
-          <div className="grid grid-cols-5 gap-3 md:gap-6">
+          <p className="text-center font-body text-sm text-text mb-10" style={{ opacity: 0.7 }}>
+            28〜29問正解でエキスパート、0〜14問で要研修
+          </p>
+          <div className="grid grid-cols-5 gap-3 md:gap-4">
             {ranks.map((rank) => (
               <div
                 key={rank.id}
-                className="flex flex-col items-center text-center p-3 md:p-5 bg-white rounded-2xl border border-border shadow-sm hover:shadow-md transition-shadow"
+                className="flex flex-col items-center text-center p-3 md:p-5 bg-white rounded-2xl border-2 border-border hover:border-[#2D8B92] transition-colors shadow-sm"
               >
-                <RankIcon rankId={rank.id} size={72} className="mb-3" />
-                <span className="text-accent font-body text-xs font-bold mb-1">{rank.grade}</span>
+                <RankIcon rankId={rank.id} size={68} className="mb-3" />
+                <span className="font-body text-xs font-black mb-1" style={{ color: "#2D8B92" }}>
+                  {rank.grade}
+                </span>
                 <span className="text-main font-body text-xs font-semibold leading-tight">
                   {rank.label}
+                </span>
+                <span className="font-body text-xs mt-1" style={{ color: "#4A4A4A", opacity: 0.5 }}>
+                  {rank.minScore}〜{rank.maxScore}問
                 </span>
               </div>
             ))}
@@ -77,36 +155,37 @@ export default function TopPage() {
         </div>
       </section>
 
-      {/* 出題カテゴリ + CTA */}
-      <section className="bg-surface py-14">
+      {/* 出題カテゴリ */}
+      <section className="bg-white py-16">
         <div className="max-w-4xl mx-auto px-6">
-          <p className="text-center text-accent font-body text-sm font-semibold tracking-widest uppercase mb-2">CATEGORIES</p>
+          <p className="text-center font-body text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: "#2D8B92" }}>CATEGORIES</p>
           <h2 className="text-center font-body text-2xl font-bold text-main mb-10">
             出題カテゴリ
           </h2>
-          <div className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden mb-10">
+          <div className="grid md:grid-cols-2 gap-3 mb-10">
             {[
-              { name: "採用トレンド", count: 3, icon: "📈" },
-              { name: "カジュアル面談 vs 面接", count: 3, icon: "💬" },
-              { name: "法的NG（家族・出身・宗教）", count: 4, icon: "⚖️" },
-              { name: "法的NG（性別・妊娠・育児）", count: 3, icon: "⚖️" },
-              { name: "法的NG（健康・身体）", count: 2, icon: "⚖️" },
-              { name: "法的NG（思想・信条・組合）", count: 2, icon: "⚖️" },
-              { name: "確約まがい発言", count: 4, icon: "🚫" },
-              { name: "ハラスメント・リスク対応", count: 5, icon: "🛡️" },
-              { name: "面接でやってほしいこと", count: 3, icon: "✅" },
-            ].map((cat, i) => (
+              { name: "採用トレンド", count: 3, icon: "📈", color: "#2D8B92" },
+              { name: "カジュアル面談 vs 面接", count: 3, icon: "💬", color: "#2D8B92" },
+              { name: "法的NG（家族・出身・宗教）", count: 4, icon: "🚫", color: "#E74C3C" },
+              { name: "法的NG（性別・妊娠・育児）", count: 3, icon: "🚫", color: "#E74C3C" },
+              { name: "法的NG（健康・身体）", count: 2, icon: "🚫", color: "#E74C3C" },
+              { name: "法的NG（思想・信条・組合）", count: 2, icon: "🚫", color: "#E74C3C" },
+              { name: "確約まがい発言", count: 4, icon: "⚠️", color: "#E67E22" },
+              { name: "ハラスメント・リスク対応", count: 5, icon: "🛡️", color: "#8E44AD" },
+              { name: "面接でやってほしいこと", count: 3, icon: "✅", color: "#27AE60" },
+            ].map((cat) => (
               <div
                 key={cat.name}
-                className={`flex items-center justify-between px-6 py-4 ${
-                  i !== 8 ? "border-b border-border" : ""
-                }`}
+                className="flex items-center justify-between px-5 py-4 rounded-xl border border-border hover:border-[#A8D8DC] transition-colors bg-white"
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-lg">{cat.icon}</span>
+                  <span className="text-xl">{cat.icon}</span>
                   <span className="text-text font-body text-sm font-medium">{cat.name}</span>
                 </div>
-                <span className="text-accent font-body text-sm font-bold bg-accent bg-opacity-10 px-3 py-1 rounded-full">
+                <span
+                  className="font-body text-xs font-bold px-3 py-1 rounded-full text-white shrink-0 ml-3"
+                  style={{ backgroundColor: cat.color }}
+                >
                   {cat.count}問
                 </span>
               </div>
@@ -116,11 +195,14 @@ export default function TopPage() {
           {/* CTA */}
           <div className="text-center">
             <Link href="/test">
-              <button className="bg-accent text-white font-body font-bold text-lg px-12 py-4 rounded-xl shadow-lg hover:shadow-xl hover:opacity-90 transition-all duration-200 active:scale-95">
-                診断を開始する →
+              <button
+                className="font-body font-bold text-lg px-12 py-4 rounded-xl shadow-lg transition-all duration-200 active:scale-95 hover:scale-105 hover:shadow-xl"
+                style={{ backgroundColor: "#2D8B92", color: "#fff" }}
+              >
+                チェックを開始する →
               </button>
             </Link>
-            <p className="text-text font-body text-xs mt-3 opacity-60">
+            <p className="font-body text-xs mt-3" style={{ color: "#4A4A4A", opacity: 0.5 }}>
               無料・約15分・29問
             </p>
           </div>
@@ -128,25 +210,31 @@ export default function TopPage() {
       </section>
 
       {/* 診断の流れ */}
-      <section className="bg-white py-14">
+      <section className="py-16" style={{ backgroundColor: "#2C3E50" }}>
         <div className="max-w-4xl mx-auto px-6">
-          <p className="text-center text-accent font-body text-sm font-semibold tracking-widest uppercase mb-2">HOW IT WORKS</p>
-          <h2 className="text-center font-body text-2xl font-bold text-main mb-10">
+          <p className="text-center font-body text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: "#A8D8DC" }}>HOW IT WORKS</p>
+          <h2 className="text-center font-body text-2xl font-bold text-white mb-12">
             診断の流れ
           </h2>
-          <div className="grid md:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-4 gap-8">
             {[
-              { step: "01", title: "診断スタート", desc: "「診断を開始する」をクリック" },
+              { step: "01", title: "スタート", desc: "ボタンをクリックして開始" },
               { step: "02", title: "29問に回答", desc: "4択形式で1問ずつ回答" },
               { step: "03", title: "情報を入力", desc: "お名前・メール・職種を入力" },
               { step: "04", title: "結果を確認", desc: "段位・スコア・解説を表示" },
-            ].map((item) => (
-              <div key={item.step} className="text-center">
-                <div className="w-12 h-12 bg-accent text-white font-body font-bold text-lg rounded-full flex items-center justify-center mx-auto mb-4">
+            ].map((item, i) => (
+              <div key={item.step} className="text-center relative">
+                {i < 3 && (
+                  <div className="hidden md:block absolute top-5 left-[calc(50%+24px)] w-[calc(100%-48px)] h-px" style={{ backgroundColor: "#2D8B92", opacity: 0.4 }} />
+                )}
+                <div
+                  className="w-12 h-12 font-body font-black text-white text-base rounded-full flex items-center justify-center mx-auto mb-4 relative z-10"
+                  style={{ backgroundColor: "#2D8B92" }}
+                >
                   {item.step}
                 </div>
-                <h3 className="font-body font-bold text-main text-base mb-2">{item.title}</h3>
-                <p className="font-body text-text text-sm leading-relaxed">{item.desc}</p>
+                <h3 className="font-body font-bold text-white text-sm mb-2">{item.title}</h3>
+                <p className="font-body text-xs leading-relaxed" style={{ color: "#A8D8DC", opacity: 0.7 }}>{item.desc}</p>
               </div>
             ))}
           </div>

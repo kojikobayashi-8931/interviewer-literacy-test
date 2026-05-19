@@ -35,7 +35,7 @@ export async function GET(req: NextRequest) {
             fontWeight: "600",
           }}
         >
-          採用面接官リテラシー診断 | NODIA
+          面接NG発言チェッカー | NODIA
         </div>
         {name && (
           <div

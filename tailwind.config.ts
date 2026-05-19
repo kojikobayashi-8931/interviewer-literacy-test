@@ -20,7 +20,7 @@ const config: Config = {
         incorrect: "#E74C3C",
       },
       fontFamily: {
-        display: ["Noto Serif JP", "serif"],
+        display: ["Noto Sans JP", "sans-serif"],
         body: ["Noto Sans JP", "sans-serif"],
       },
     },

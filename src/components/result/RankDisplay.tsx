@@ -37,7 +37,7 @@ export function RankDisplay({ rank, correctCount, totalQuestions }: RankDisplayP
           <p className="text-sm text-text font-body">正答率</p>
         </div>
       </div>
-      <p className="text-text font-body text-sm md:text-base leading-relaxed max-w-lg mx-auto bg-surface rounded-xl p-4 border border-border">
+      <p className="text-white font-body text-sm md:text-base leading-relaxed max-w-lg mx-auto rounded-xl p-5" style={{ backgroundColor: "#2D8B92" }}>
         {rank.message}
       </p>
     </div>

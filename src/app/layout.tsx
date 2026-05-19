@@ -23,30 +23,30 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className="min-h-screen bg-base">
-        <header className="bg-main shadow-sm">
-          <div className="max-w-3xl mx-auto px-4 py-3 flex items-center">
+        <header className="bg-white border-b border-border shadow-sm">
+          <div className="max-w-4xl mx-auto px-6 py-4 flex items-center">
             <a href="https://nodia.co.jp/" target="_blank" rel="noopener noreferrer">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/logo.png"
                 alt="NODIA"
-                className="h-8 w-auto brightness-0 invert"
+                className="h-8 w-auto"
               />
             </a>
           </div>
         </header>
         <main>{children}</main>
-        <footer className="mt-16 border-t border-border py-8">
-          <div className="max-w-3xl mx-auto px-4 text-center">
-            <p className="text-xs text-text font-body">
+        <footer className="mt-16 bg-main py-8">
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <p className="text-xs text-white opacity-70 font-body">
               © 2026 NODIA Inc. All Rights Reserved.
             </p>
-            <p className="text-xs text-text font-body mt-2">
+            <p className="text-xs mt-2 font-body">
               <a
                 href="https://nodia.co.jp/privacy.html"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-accent hover:underline mr-4"
+                className="text-accent-light hover:underline mr-4"
               >
                 プライバシーポリシー
               </a>
@@ -54,7 +54,7 @@ export default function RootLayout({
                 href="https://nodia.co.jp/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-accent hover:underline"
+                className="text-accent-light hover:underline"
               >
                 NODIAサイトへ
               </a>

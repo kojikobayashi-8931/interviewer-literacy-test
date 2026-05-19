@@ -47,7 +47,7 @@ export function QuestionCard({ question, categoryName, onAnswer }: QuestionCardP
               onChange={() => setSelected(choice.id)}
               className="mt-0.5 accent-accent shrink-0"
             />
-            <span className="text-text font-body text-base leading-relaxed">
+            <span className="text-text font-body text-sm leading-relaxed">
               {choice.text}
             </span>
           </label>

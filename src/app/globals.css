@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -14,7 +14,6 @@
   --color-border: #E2E8ED;
   --color-correct: #27AE60;
   --color-incorrect: #E74C3C;
-  --font-display: 'Noto Serif JP', serif;
   --font-body: 'Noto Sans JP', sans-serif;
 }
 
@@ -24,6 +23,6 @@ body {
   background-color: var(--color-base);
 }
 
-h1, h2, h3 {
-  font-family: var(--font-display);
+h1, h2, h3, h4 {
+  font-family: var(--font-body);
 }

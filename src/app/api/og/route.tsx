@@ -65,7 +65,7 @@ export async function GET(req: NextRequest) {
             marginBottom: "40px",
           }}
         >
-          {score}/29問正解
+          {score}/23問正解
         </div>
         <div
           style={{

@@ -4,10 +4,10 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "面接NG発言チェッカー | NODIA",
   description:
-    "その質問、アウトかもしれません。採用面接官に必要な知識・リテラシーを29問で診断。NGな質問・発言を理解して、リスクのない面接を実現しましょう。",
+    "その質問、アウトかもしれません。採用面接官に必要な知識・リテラシーを23問で診断。NGな質問・発言を理解して、リスクのない面接を実現しましょう。",
   openGraph: {
     title: "面接NG発言チェッカー | NODIA",
-    description: "その質問、アウトかもしれません。29問で面接リテラシーを診断。",
+    description: "その質問、アウトかもしれません。23問で面接リテラシーを診断。",
     type: "website",
   },
   twitter: {

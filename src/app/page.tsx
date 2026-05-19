@@ -42,15 +42,15 @@ export default function TopPage() {
 
             <p className="text-white font-body text-base md:text-lg mb-4 max-w-lg mx-auto leading-relaxed" style={{ opacity: 0.75 }}>
               法的NGな質問・確約まがい発言・ハラスメント…<br className="hidden md:block" />
-              29問で面接リテラシーを診断し、段位で判定します。
+              23問で面接リテラシーを診断し、段位で判定します。
             </p>
 
             {/* Stats */}
             <div className="flex items-center justify-center gap-6 mb-10">
               {[
-                { value: "29問", label: "問題数" },
-                { value: "9カテゴリ", label: "出題領域" },
-                { value: "約15分", label: "所要時間" },
+                { value: "23問", label: "問題数" },
+                { value: "7カテゴリ", label: "出題領域" },
+                { value: "約10分", label: "所要時間" },
               ].map((s, i) => (
                 <div key={i} className="flex items-center gap-6">
                   <div className="text-center">
@@ -131,7 +131,7 @@ export default function TopPage() {
             5段階の段位で判定
           </h2>
           <p className="text-center font-body text-sm text-text mb-10" style={{ opacity: 0.7 }}>
-            28〜29問正解でエキスパート、0〜14問で要研修
+            22〜23問正解でエキスパート、0〜10問で要研修
           </p>
           <div className="grid grid-cols-5 gap-3 md:gap-4">
             {ranks.map((rank) => (
@@ -164,7 +164,6 @@ export default function TopPage() {
           </h2>
           <div className="grid md:grid-cols-2 gap-3 mb-10">
             {[
-              { name: "採用トレンド", count: 3, icon: "📈", color: "#2D8B92" },
               { name: "カジュアル面談 vs 面接", count: 3, icon: "💬", color: "#2D8B92" },
               { name: "法的NG（家族・出身・宗教）", count: 4, icon: "🚫", color: "#E74C3C" },
               { name: "法的NG（性別・妊娠・育児）", count: 3, icon: "🚫", color: "#E74C3C" },
@@ -172,7 +171,6 @@ export default function TopPage() {
               { name: "法的NG（思想・信条・組合）", count: 2, icon: "🚫", color: "#E74C3C" },
               { name: "確約まがい発言", count: 4, icon: "⚠️", color: "#E67E22" },
               { name: "ハラスメント・リスク対応", count: 5, icon: "🛡️", color: "#8E44AD" },
-              { name: "面接でやってほしいこと", count: 3, icon: "✅", color: "#27AE60" },
             ].map((cat) => (
               <div
                 key={cat.name}
@@ -203,7 +201,7 @@ export default function TopPage() {
               </button>
             </Link>
             <p className="font-body text-xs mt-3" style={{ color: "#4A4A4A", opacity: 0.5 }}>
-              無料・約15分・29問
+              無料・約10分・23問
             </p>
           </div>
         </div>
@@ -219,7 +217,7 @@ export default function TopPage() {
           <div className="grid md:grid-cols-4 gap-8">
             {[
               { step: "01", title: "スタート", desc: "ボタンをクリックして開始" },
-              { step: "02", title: "29問に回答", desc: "4択形式で1問ずつ回答" },
+              { step: "02", title: "23問に回答", desc: "4択形式で1問ずつ回答" },
               { step: "03", title: "情報を入力", desc: "お名前・メール・職種を入力" },
               { step: "04", title: "結果を確認", desc: "段位・スコア・解説を表示" },
             ].map((item, i) => (

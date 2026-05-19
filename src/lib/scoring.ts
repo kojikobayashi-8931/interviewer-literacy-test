@@ -9,8 +9,8 @@ export const RANK_THRESHOLDS: Rank[] = [
     message:
       "面接官として最高レベルの知識を持っています。社内の面接品質向上のリーダーとして活躍が期待されます。",
     iconPath: "/ranks/lv5_grandmaster.svg",
-    minScore: 28,
-    maxScore: 29,
+    minScore: 22,
+    maxScore: 23,
   },
   {
     grade: "A",
@@ -19,42 +19,44 @@ export const RANK_THRESHOLDS: Rank[] = [
     message:
       "面接官として高い知識・リテラシーを持っています。後輩面接官へのフィードバックや振り返りにも積極的に関わってください。",
     iconPath: "/ranks/lv4_master.svg",
-    minScore: 25,
-    maxScore: 27,
+    minScore: 20,
+    maxScore: 21,
   },
   {
     grade: "B",
     id: "path",
     label: "標準レベル",
     message:
-      "面接官として必要な知識の大部分を理解しています。苦手な分野の問題を振り返り、実践でも意識して面接に臨みましょう。",
+      "面接官として必要な知識の大部分を理解しています。苦手な分野の解説を振り返り、実践でも意識して面接に臨みましょう。",
     iconPath: "/ranks/lv3_path.svg",
-    minScore: 20,
-    maxScore: 24,
+    minScore: 16,
+    maxScore: 19,
   },
   {
     grade: "C",
     id: "step",
     label: "基礎レベル",
     message:
-      "基本的な知識は身についていますが、法的リスクや確約まがい発言についてはさらなる理解が必要です。研修を通じて理解を深めましょう。",
+      "基本的な知識は身についていますが、法的リスクや確約まがい発言についてはさらなる理解が必要です。研修を通じて知識を補強しましょう。",
     iconPath: "/ranks/lv2_step.svg",
-    minScore: 15,
-    maxScore: 19,
+    minScore: 11,
+    maxScore: 15,
   },
   {
     grade: "D",
     id: "egg",
     label: "要研修",
     message:
-      "面接官として必要な基礎知識に課題があります。特に法的NGな質問・確約まがい発言については今すぐ研修を受けてください。面接実施前に必ずトレーニングへの参加をお願いします。",
+      "面接官として必要な基礎知識に大きな課題があります。特に法的NGな質問・確約まがい発言については今すぐ研修を受けてください。面接実施前に必ずトレーニングへの参加をお願いします。",
     iconPath: "/ranks/lv1_egg.svg",
     minScore: 0,
-    maxScore: 14,
+    maxScore: 10,
   },
 ];
 
 export const CATEGORY_FEEDBACK: Record<string, string> = {
+  casual_vs_formal:
+    "カジュアル面談と面接の違いについて理解が不十分です。カジュアル面談は選考ではないため、評価的な言動や確約まがい発言は特に注意が必要です。",
   ng_family:
     "家族・出身・宗教に関するNGな質問について理解が不十分です。就職差別防止の観点から、厚生労働省の採用選考指針を再確認してください。",
   ng_gender:

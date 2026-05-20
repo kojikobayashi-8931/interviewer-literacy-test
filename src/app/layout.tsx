@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+  || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+
 export const metadata: Metadata = {
+  metadataBase: new URL(baseUrl),
   title: "面接NG発言チェッカー | NODIA",
   description:
     "その質問、アウトかもしれません。採用面接官に必要な知識・リテラシーを23問で診断。NGな質問・発言を理解して、リスクのない面接を実現しましょう。",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ProgressBar } from "@/src/components/ui/ProgressBar";
 import { QuestionCard } from "@/src/components/test/QuestionCard";
@@ -22,6 +22,12 @@ export default function TestPage() {
   const [phase, setPhase] = useState<Phase>("test");
   const [currentIndex, setCurrentIndex] = useState(0);
   const { answers, addAnswer, resetAnswers } = useTestStore();
+
+  // マウント時に前回の回答をリセット（再テスト時の蓄積を防ぐ）
+  useEffect(() => {
+    resetAnswers();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const router = useRouter();
 
   const handleAnswer = (selectedId: string) => {

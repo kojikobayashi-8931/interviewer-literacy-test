@@ -82,12 +82,15 @@ export default function TopPage() {
       <section style={{ backgroundColor: "#2D8B92" }} className="py-5">
         <div className="max-w-4xl mx-auto px-6">
           <div className="flex flex-wrap items-center justify-center gap-4 md:gap-10">
-            {[
-              "家族・出身について聞いた",
-              "結婚・出産の予定を聞いた",
-              "「ほぼ内定」と伝えた",
-              "他社の辞退を勧めた",
-            ].map((text) => (
+            {["家族・出身について聞いた", "結婚・出産の予定を聞いた"].map((text) => (
+              <div key={text} className="flex items-center gap-2">
+                <span className="text-white font-bold text-sm">⚠</span>
+                <span className="text-white font-body text-sm">{text}</span>
+              </div>
+            ))}
+            {/* スマホで改行を入れるセパレーター */}
+            <div className="w-full md:hidden" />
+            {["「ほぼ内定」と伝えた", "他社の辞退を勧めた"].map((text) => (
               <div key={text} className="flex items-center gap-2">
                 <span className="text-white font-bold text-sm">⚠</span>
                 <span className="text-white font-body text-sm">{text}</span>
@@ -133,11 +136,33 @@ export default function TopPage() {
           <p className="text-center font-body text-sm text-text mb-10" style={{ opacity: 0.7 }}>
             22〜23問正解でエキスパート、0〜10問で要研修
           </p>
-          <div className="grid grid-cols-5 gap-3 md:gap-4">
+          {/* スマホ: S→A→B→C→D の縦並び */}
+          <div className="flex flex-col gap-3 md:hidden">
+            {RANK_THRESHOLDS.map((rank) => (
+              <div
+                key={rank.id}
+                className="flex items-center gap-4 p-4 bg-white rounded-2xl border-2 border-border hover:border-[#2D8B92] transition-colors shadow-sm"
+              >
+                <RankIcon rankId={rank.id} size={56} className="shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <span className="font-body text-sm font-black block" style={{ color: "#2D8B92" }}>
+                    {rank.grade}段位
+                  </span>
+                  <span className="text-main font-body text-sm font-semibold">{rank.label}</span>
+                </div>
+                <span className="font-body text-xs shrink-0" style={{ color: "#4A4A4A", opacity: 0.5 }}>
+                  {rank.minScore}〜{rank.maxScore}問
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* デスクトップ: D→C→B→A→S の横並び（昇順） */}
+          <div className="hidden md:grid md:grid-cols-5 md:gap-4">
             {ranks.map((rank) => (
               <div
                 key={rank.id}
-                className="flex flex-col items-center text-center p-3 md:p-5 bg-white rounded-2xl border-2 border-border hover:border-[#2D8B92] transition-colors shadow-sm"
+                className="flex flex-col items-center text-center p-5 bg-white rounded-2xl border-2 border-border hover:border-[#2D8B92] transition-colors shadow-sm"
               >
                 <RankIcon rankId={rank.id} size={68} className="mb-3" />
                 <span className="font-body text-xs font-black mb-1" style={{ color: "#2D8B92" }}>

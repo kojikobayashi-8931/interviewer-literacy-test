@@ -14,13 +14,16 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
   const [copied, setCopied] = useState(false);
 
   const shareText = name
-    ? `${name}さんの診断結果：${rank.label}（${rank.grade}） | ${correctCount}/${totalQuestions}問正解 | 採用面接官リテラシー診断 by NODIA`
-    : `私の診断結果：${rank.label}（${rank.grade}） | ${correctCount}/${totalQuestions}問正解 | 採用面接官リテラシー診断 by NODIA`;
+    ? `${name}さんの診断結果：${rank.label}（${rank.grade}） | ${correctCount}/${totalQuestions}問正解 | 面接NG発言チェッカー by NODIA`
+    : `私の診断結果：${rank.label}（${rank.grade}） | ${correctCount}/${totalQuestions}問正解 | 面接NG発言チェッカー by NODIA`;
 
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
 
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
-  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+
+  // Facebook: display=popup で確実にポップアップを開く
+  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&display=popup`;
+
   const linkedinUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(shareText)}`;
 
   const handleCopy = async () => {
@@ -29,13 +32,31 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // Facebook: window.open でポップアップとして開く（一部ブラウザで<a>より安定）
+  const handleFacebookShare = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const w = 600;
+    const h = 500;
+    const left = Math.round((window.screen.width - w) / 2);
+    const top = Math.round((window.screen.height - h) / 2);
+    window.open(
+      facebookUrl,
+      "facebook-share",
+      `width=${w},height=${h},left=${left},top=${top},toolbar=0,menubar=0,scrollbars=1`
+    );
+  };
+
   const btnClass =
     "inline-flex items-center gap-2 px-4 py-2.5 rounded-lg font-body font-semibold text-sm transition-all duration-200";
 
   return (
     <div>
-      <h3 className="font-display text-lg font-bold text-main mb-3">結果をシェア</h3>
+      <h3 className="font-display text-lg font-bold text-main mb-1">結果をシェア</h3>
+      <p className="text-xs text-text font-body mb-4" style={{ opacity: 0.6 }}>
+        段位とランクアイコンがSNSカードとして表示されます
+      </p>
       <div className="flex flex-wrap gap-3">
+        {/* X (Twitter) */}
         <a
           href={twitterUrl}
           target="_blank"
@@ -47,17 +68,19 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
           </svg>
           X でシェア
         </a>
-        <a
-          href={facebookUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+
+        {/* Facebook */}
+        <button
+          onClick={handleFacebookShare}
           className={`${btnClass} bg-[#1877F2] text-white hover:bg-[#1565C0]`}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
             <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
           </svg>
           Facebook
-        </a>
+        </button>
+
+        {/* LinkedIn */}
         <a
           href={linkedinUrl}
           target="_blank"
@@ -69,6 +92,8 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
           </svg>
           LinkedIn
         </a>
+
+        {/* コピー */}
         <button
           onClick={handleCopy}
           className={`${btnClass} bg-surface border-2 border-border text-main hover:border-accent hover:text-accent`}

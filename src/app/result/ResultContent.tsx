@@ -107,7 +107,7 @@ function ResultInner() {
 
       {/* ⑥ アクションボタン */}
       <div className="flex flex-col sm:flex-row gap-4 justify-center pb-4">
-        <Button variant="outline" onClick={handleRetry}>
+        <Button variant="primary" onClick={handleRetry}>
           もう一度テストする
         </Button>
         <a

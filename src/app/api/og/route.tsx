@@ -21,29 +21,37 @@ const RANK_ICON_FILES: Record<string, string> = {
 };
 
 export async function GET(req: NextRequest) {
-  const { searchParams, origin } = new URL(req.url);
+  const url = new URL(req.url);
+  const searchParams = url.searchParams;
   const rankId = searchParams.get("rank") ?? "egg";
   const score = parseInt(searchParams.get("score") ?? "0", 10);
   const name = searchParams.get("name") ?? "";
 
-  // rankId で直接段位を取得（score の再計算を避ける）
+  // rankId で直接段位を取得
   const rank =
     RANK_THRESHOLDS.find((r) => r.id === rankId) ??
     RANK_THRESHOLDS[RANK_THRESHOLDS.length - 1];
 
   const gradeColor = GRADE_COLORS[rank.grade] ?? "#95A5A6";
 
-  // SVGアイコンを取得してData URIに変換
+  // SVGアイコンをData URIとして取得
   let iconDataUri = "";
   try {
     const iconFileName = RANK_ICON_FILES[rankId] ?? "lv1_egg.svg";
-    const iconRes = await fetch(`${origin}/ranks/${iconFileName}`);
+    // originをホストヘッダーから確実に取得
+    const host = req.headers.get("host") ?? url.host;
+    const proto = req.headers.get("x-forwarded-proto") ?? url.protocol.replace(":", "");
+    const fetchBase = `${proto}://${host}`;
+
+    const iconRes = await fetch(`${fetchBase}/ranks/${iconFileName}`, {
+      cache: "force-cache",
+    });
     if (iconRes.ok) {
       const svgText = await iconRes.text();
       iconDataUri = `data:image/svg+xml,${encodeURIComponent(svgText)}`;
     }
   } catch {
-    // SVG取得失敗時はグレードテキストで代替
+    // フォールバック: グレードバッジを表示
   }
 
   return new ImageResponse(
@@ -59,7 +67,6 @@ export async function GET(req: NextRequest) {
           backgroundColor: "#2C3E50",
           fontFamily: "sans-serif",
           padding: "60px",
-          gap: "0px",
         }}
       >
         {/* サービス名 */}
@@ -76,21 +83,20 @@ export async function GET(req: NextRequest) {
         </div>
 
         {/* ユーザー名 */}
-        {name && (
+        {name !== "" && (
           <div
             style={{
               color: "#FFFFFF",
               fontSize: "28px",
               marginBottom: "16px",
-              opacity: 0.9,
             }}
           >
             {name}さんの診断結果
           </div>
         )}
 
-        {/* SVGアイコン or グレードバッジ */}
-        {iconDataUri ? (
+        {/* ランクアイコン or グレードバッジ */}
+        {iconDataUri !== "" ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={iconDataUri}
@@ -104,16 +110,15 @@ export async function GET(req: NextRequest) {
             style={{
               width: "140px",
               height: "140px",
-              borderRadius: "50%",
+              borderRadius: "70px",
               backgroundColor: gradeColor,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: "80px",
+              fontSize: "72px",
               fontWeight: "900",
               color: "#FFFFFF",
               marginBottom: "16px",
-              boxShadow: `0 0 40px ${gradeColor}80`,
             }}
           >
             {rank.grade}
@@ -123,14 +128,16 @@ export async function GET(req: NextRequest) {
         {/* 段位ラベル */}
         <div
           style={{
+            display: "flex",
+            alignItems: "baseline",
             color: gradeColor,
             fontSize: "52px",
             fontWeight: "bold",
             marginBottom: "8px",
           }}
         >
-          {rank.label}
-          <span style={{ fontSize: "36px", marginLeft: "12px", opacity: 0.8 }}>
+          <span>{rank.label}</span>
+          <span style={{ fontSize: "32px", marginLeft: "12px", opacity: 0.85 }}>
             （{rank.grade}）
           </span>
         </div>
@@ -139,8 +146,8 @@ export async function GET(req: NextRequest) {
         <div
           style={{
             color: "#FFFFFF",
-            fontSize: "32px",
-            marginBottom: "24px",
+            fontSize: "30px",
+            marginBottom: "28px",
             opacity: 0.85,
           }}
         >
@@ -152,7 +159,7 @@ export async function GET(req: NextRequest) {
           style={{
             color: "#A8D8DC",
             fontSize: "18px",
-            opacity: 0.7,
+            opacity: 0.65,
           }}
         >
           あなたも診断してみよう →

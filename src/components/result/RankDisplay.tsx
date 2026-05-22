@@ -12,26 +12,36 @@ export function RankDisplay({ rank, correctCount, totalQuestions }: RankDisplayP
 
   return (
     <div className="text-center py-4 md:py-8">
-      {/* アイコン：スマホは小さく（64px）、PCは大きく（160px） */}
-      <div className="flex justify-center mb-3 md:mb-6">
+
+      {/* 炎上リスクバッジ */}
+      <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-4 md:mb-5"
+        style={{ backgroundColor: `${rank.riskColor}18`, border: `1.5px solid ${rank.riskColor}` }}
+      >
+        <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: rank.riskColor }} />
+        <span className="font-body text-xs md:text-sm font-bold" style={{ color: rank.riskColor }}>
+          面接炎上リスク：{rank.riskLevel}
+        </span>
+      </div>
+
+      {/* ランクアイコン */}
+      <div className="flex justify-center mb-3 md:mb-5">
         <RankIcon
           rankId={rank.id}
           size={160}
-          className="w-16 h-16 md:w-40 md:h-40"
+          className="w-16 h-16 md:w-36 md:h-36"
         />
       </div>
 
-      <p className="text-accent font-body text-xs md:text-base font-semibold mb-1 md:mb-2">
-        あなたの段位
+      {/* 称号 */}
+      <p className="font-body text-xs text-text mb-1 md:mb-1" style={{ opacity: 0.55 }}>
+        あなたの称号
       </p>
-
-      <h2 className="font-display text-2xl md:text-4xl font-bold text-main mb-1 md:mb-2">
+      <h2 className="font-display text-2xl md:text-4xl font-bold text-main mb-1 md:mb-2 leading-tight">
         {rank.label}
-        <span className="text-accent ml-2 text-xl md:text-2xl">（{rank.grade}）</span>
       </h2>
 
       {/* スコア・正答率 */}
-      <div className="flex items-center justify-center gap-4 mt-2 mb-4 md:mt-4 md:mb-6">
+      <div className="flex items-center justify-center gap-4 mt-3 mb-4 md:mt-4 md:mb-6">
         <div className="text-center">
           <p className="text-2xl md:text-3xl font-bold text-main font-display">
             {correctCount}
@@ -39,15 +49,15 @@ export function RankDisplay({ rank, correctCount, totalQuestions }: RankDisplayP
               {" "}/ {totalQuestions}問
             </span>
           </p>
-          <p className="text-xs text-text font-body">正解数</p>
+          <p className="text-xs text-text font-body mt-0.5">正解数</p>
         </div>
         <div className="w-px h-10 md:h-12 bg-border" />
         <div className="text-center">
-          <p className="text-2xl md:text-3xl font-bold text-accent font-display">
+          <p className="font-display font-bold" style={{ fontSize: "1.5rem", color: rank.riskColor }}>
             {rate}
-            <span className="text-base md:text-lg font-body font-normal text-text">%</span>
+            <span className="text-base font-body font-normal text-text">%</span>
           </p>
-          <p className="text-xs text-text font-body">正答率</p>
+          <p className="text-xs text-text font-body mt-0.5">正答率</p>
         </div>
       </div>
 

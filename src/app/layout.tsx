@@ -6,6 +6,10 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
+  icons: {
+    icon: "https://nodia.co.jp/assets/favicon.ico",
+    shortcut: "https://nodia.co.jp/assets/favicon.ico",
+  },
   title: "面接NG発言チェッカー | NODIA",
   description:
     "その質問、アウトかもしれません。採用面接官に必要な知識・リテラシーを23問で診断。NGな質問・発言を理解して、リスクのない面接を実現しましょう。",

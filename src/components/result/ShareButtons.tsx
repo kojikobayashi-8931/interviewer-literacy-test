@@ -13,9 +13,10 @@ type ShareButtonsProps = {
 export function ShareButtons({ rank, correctCount, totalQuestions, name }: ShareButtonsProps) {
   const [copied, setCopied] = useState(false);
 
+  const rate = Math.round((correctCount / totalQuestions) * 1000) / 10;
   const shareText = name
-    ? `${name}さんの診断結果：${rank.label}（${rank.grade}） | ${correctCount}/${totalQuestions}問正解 | 面接NG発言チェッカー by NODIA`
-    : `私の診断結果：${rank.label}（${rank.grade}） | ${correctCount}/${totalQuestions}問正解 | 面接NG発言チェッカー by NODIA`;
+    ? `${name}さんの面接炎上リスク診断：「${rank.label}」 | ${correctCount}/${totalQuestions}問正解（${rate}%）| 炎上リスク：${rank.riskLevel} | 面接NG発言チェッカー by NODIA`
+    : `私の面接炎上リスク診断：「${rank.label}」 | ${correctCount}/${totalQuestions}問正解（${rate}%）| 炎上リスク：${rank.riskLevel} | 面接NG発言チェッカー by NODIA`;
 
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
 

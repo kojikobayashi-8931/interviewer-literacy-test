@@ -5,9 +5,11 @@ export const RANK_THRESHOLDS: Rank[] = [
   {
     grade: "S",
     id: "grandmaster",
-    label: "エキスパート",
+    label: "面接セーフティ職人",
+    riskLevel: "低め",
+    riskColor: "#27AE60",
     message:
-      "面接官として最高レベルの知識を持っています。社内の面接品質向上のリーダーとして活躍が期待されます。",
+      "法的NGな質問・確約まがい発言・ハラスメントについて、ほぼ完璧な知識を持っています。社内の面接品質リーダーとして、他の面接官への指導・振り返りにぜひ活躍してください。",
     iconPath: "/ranks/lv5_grandmaster.svg",
     minScore: 22,
     maxScore: 23,
@@ -15,9 +17,11 @@ export const RANK_THRESHOLDS: Rank[] = [
   {
     grade: "A",
     id: "master",
-    label: "上級レベル",
+    label: "面接防火管理者",
+    riskLevel: "やや低め",
+    riskColor: "#2D8B92",
     message:
-      "面接官として高い知識・リテラシーを持っています。後輩面接官へのフィードバックや振り返りにも積極的に関わってください。",
+      "面接官として高い知識を持っています。一部の分野をおさらいすれば、ほぼリスクなく面接を運営できます。解説を振り返り、万全の状態で面接に臨みましょう。",
     iconPath: "/ranks/lv4_master.svg",
     minScore: 20,
     maxScore: 21,
@@ -25,9 +29,11 @@ export const RANK_THRESHOLDS: Rank[] = [
   {
     grade: "B",
     id: "path",
-    label: "標準レベル",
+    label: "火種センサー搭載中",
+    riskLevel: "普通",
+    riskColor: "#E67E22",
     message:
-      "面接官として必要な知識の大部分を理解しています。苦手な分野の解説を振り返り、実践でも意識して面接に臨みましょう。",
+      "基本的な知識はありますが、NGな質問・発言を見落とすリスクがあります。苦手カテゴリの解説を必ず振り返り、炎上を未然に防ぎましょう。",
     iconPath: "/ranks/lv3_path.svg",
     minScore: 16,
     maxScore: 19,
@@ -35,9 +41,11 @@ export const RANK_THRESHOLDS: Rank[] = [
   {
     grade: "C",
     id: "step",
-    label: "基礎レベル",
+    label: "消火器スタンバイ",
+    riskLevel: "やや高め",
+    riskColor: "#E74C3C",
     message:
-      "基本的な知識は身についていますが、法的リスクや確約まがい発言についてはさらなる理解が必要です。研修を通じて知識を補強しましょう。",
+      "法的リスクや確約まがい発言への理解が不十分です。このまま面接に入ると炎上リスクがあります。研修で知識を補強してから面接に臨んでください。",
     iconPath: "/ranks/lv2_step.svg",
     minScore: 11,
     maxScore: 15,
@@ -45,9 +53,11 @@ export const RANK_THRESHOLDS: Rank[] = [
   {
     grade: "D",
     id: "egg",
-    label: "要研修",
+    label: "面接室に消火器必須",
+    riskLevel: "高め",
+    riskColor: "#C0392B",
     message:
-      "面接官として必要な基礎知識に大きな課題があります。特に法的NGな質問・確約まがい発言については今すぐ研修を受けてください。面接実施前に必ずトレーニングへの参加をお願いします。",
+      "法的NGな質問・確約まがい発言・ハラスメントに関する基礎知識に大きな課題があります。面接実施前に必ず研修を受けてください。このまま面接に入ることは会社のリスクになります。",
     iconPath: "/ranks/lv1_egg.svg",
     minScore: 0,
     maxScore: 10,

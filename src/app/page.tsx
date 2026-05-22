@@ -42,7 +42,7 @@ export default function TopPage() {
 
             <p className="text-white font-body text-base md:text-lg mb-4 max-w-lg mx-auto leading-relaxed" style={{ opacity: 0.75 }}>
               法的NGな質問・確約まがい発言・ハラスメント…<br className="hidden md:block" />
-              23問で面接リテラシーを診断し、段位で判定します。
+              23問で「面接炎上リスク」を診断します。
             </p>
 
             {/* Stats */}
@@ -126,52 +126,63 @@ export default function TopPage() {
         </div>
       </section>
 
-      {/* 段位紹介 */}
+      {/* 炎上リスク称号紹介 */}
       <section className="py-16" style={{ backgroundColor: "#F7F9FA" }}>
         <div className="max-w-4xl mx-auto px-6">
-          <p className="text-center font-body text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: "#2D8B92" }}>RANK</p>
+          <p className="text-center font-body text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: "#2D8B92" }}>RESULT</p>
           <h2 className="text-center font-body text-2xl font-bold text-main mb-3">
-            5段階の段位で判定
+            5段階の炎上リスクで診断
           </h2>
           <p className="text-center font-body text-sm text-text mb-10" style={{ opacity: 0.7 }}>
-            22〜23問正解でエキスパート、0〜10問で要研修
+            正答率95%以上で「職人」、50%未満は「消火器必須」レベル
           </p>
-          {/* スマホ: S→A→B→C→D の縦並び */}
+
+          {/* スマホ: 縦並び（リスク高め → 低め） */}
           <div className="flex flex-col gap-3 md:hidden">
             {RANK_THRESHOLDS.map((rank) => (
               <div
                 key={rank.id}
-                className="flex items-center gap-4 p-4 bg-white rounded-2xl border-2 border-border hover:border-[#2D8B92] transition-colors shadow-sm"
+                className="flex items-center gap-4 p-4 bg-white rounded-2xl border-2 transition-colors shadow-sm"
+                style={{ borderColor: `${rank.riskColor}40` }}
               >
                 <RankIcon rankId={rank.id} size={56} className="shrink-0" />
                 <div className="flex-1 min-w-0">
-                  <span className="font-body text-sm font-black block" style={{ color: "#2D8B92" }}>
-                    {rank.grade}段位
+                  <span
+                    className="font-body text-xs font-bold inline-flex items-center gap-1.5 mb-0.5"
+                    style={{ color: rank.riskColor }}
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: rank.riskColor }} />
+                    炎上リスク：{rank.riskLevel}
                   </span>
-                  <span className="text-main font-body text-sm font-semibold">{rank.label}</span>
+                  <span className="text-main font-body text-sm font-bold block leading-tight">{rank.label}</span>
                 </div>
-                <span className="font-body text-xs shrink-0" style={{ color: "#4A4A4A", opacity: 0.5 }}>
+                <span className="font-body text-xs shrink-0" style={{ color: "#4A4A4A", opacity: 0.45 }}>
                   {rank.minScore}〜{rank.maxScore}問
                 </span>
               </div>
             ))}
           </div>
 
-          {/* デスクトップ: D→C→B→A→S の横並び（昇順） */}
+          {/* デスクトップ: 横並び */}
           <div className="hidden md:grid md:grid-cols-5 md:gap-4">
             {ranks.map((rank) => (
               <div
                 key={rank.id}
-                className="flex flex-col items-center text-center p-5 bg-white rounded-2xl border-2 border-border hover:border-[#2D8B92] transition-colors shadow-sm"
+                className="flex flex-col items-center text-center p-5 bg-white rounded-2xl border-2 transition-colors shadow-sm"
+                style={{ borderColor: `${rank.riskColor}40` }}
               >
-                <RankIcon rankId={rank.id} size={68} className="mb-3" />
-                <span className="font-body text-xs font-black mb-1" style={{ color: "#2D8B92" }}>
-                  {rank.grade}
+                <RankIcon rankId={rank.id} size={64} className="mb-3" />
+                <span
+                  className="font-body text-xs font-bold mb-1 inline-flex items-center gap-1"
+                  style={{ color: rank.riskColor }}
+                >
+                  <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: rank.riskColor }} />
+                  {rank.riskLevel}
                 </span>
-                <span className="text-main font-body text-xs font-semibold leading-tight">
+                <span className="text-main font-body text-xs font-bold leading-tight">
                   {rank.label}
                 </span>
-                <span className="font-body text-xs mt-1" style={{ color: "#4A4A4A", opacity: 0.5 }}>
+                <span className="font-body text-xs mt-1.5" style={{ color: "#4A4A4A", opacity: 0.45 }}>
                   {rank.minScore}〜{rank.maxScore}問
                 </span>
               </div>

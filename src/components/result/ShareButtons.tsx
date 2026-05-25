@@ -18,7 +18,10 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
     ? `${name}さんの面接炎上リスク診断：「${rank.label}」 | ${correctCount}/${totalQuestions}問正解（${rate}%）| 炎上リスク：${rank.riskLevel} | 面接NG発言チェッカー by NODIA`
     : `私の面接炎上リスク診断：「${rank.label}」 | ${correctCount}/${totalQuestions}問正解（${rate}%）| 炎上リスク：${rank.riskLevel} | 面接NG発言チェッカー by NODIA`;
 
-  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+  // シェアURLはトップページ（ランク情報をパラメータとして付与してOGP画像を動的生成）
+  const shareUrl = typeof window !== "undefined"
+    ? `${window.location.origin}/?rank=${encodeURIComponent(rank.id)}&score=${encodeURIComponent(correctCount)}${name ? `&n=${encodeURIComponent(name)}` : ""}`
+    : "";
 
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
 

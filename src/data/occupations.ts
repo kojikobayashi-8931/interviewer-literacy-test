@@ -275,11 +275,19 @@ export type SpecialtyOption = {
 
 export function getCareers(): CareerOption[] {
   const seen = new Set<string>();
-  return OCCUPATIONS.filter((o) => {
+  const careers = OCCUPATIONS.filter((o) => {
     if (seen.has(o.careerId)) return false;
     seen.add(o.careerId);
     return true;
   }).map((o) => ({ id: o.careerId, label: o.careerLabel }));
+
+  // CA99（全業種共通）を先頭に移動
+  const ca99Index = careers.findIndex((c) => c.id === "CA99");
+  if (ca99Index > 0) {
+    const [ca99] = careers.splice(ca99Index, 1);
+    careers.unshift(ca99);
+  }
+  return careers;
 }
 
 export function getGroups(careerId: string): GroupOption[] {

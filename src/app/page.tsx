@@ -1,6 +1,54 @@
+import type { Metadata } from "next";
+import { headers } from "next/headers";
 import Link from "next/link";
 import { RANK_THRESHOLDS } from "@/src/lib/scoring";
 import { RankIcon } from "@/src/components/ui/RankIcon";
+
+type Props = {
+  searchParams: { rank?: string; score?: string; n?: string };
+};
+
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+  const rankId = searchParams.rank;
+  const score = searchParams.score ?? "0";
+  const name = searchParams.n ?? "";
+
+  // ランクパラメータがない場合はデフォルトのメタデータ（layout.tsxから継承）
+  if (!rankId) return {};
+
+  const headersList = headers();
+  const host = headersList.get("host") ?? "localhost:3000";
+  const proto = headersList.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
+  const baseUrl = `${proto}://${host}`;
+
+  const rank = RANK_THRESHOLDS.find((r) => r.id === rankId);
+  const rankLabel = rank ? `${rank.label}（${rank.grade}）` : "要研修（D）";
+
+  const title = name
+    ? `${name}さんの診断結果：${rankLabel} | 面接NG発言チェッカー`
+    : `診断結果：${rankLabel} | 面接NG発言チェッカー`;
+  const description = `${score}/23問正解 | 面接NG発言チェッカー by NODIA`;
+  const ogImageUrl = `${baseUrl}/api/og?rank=${encodeURIComponent(rankId)}&score=${encodeURIComponent(score)}&name=${encodeURIComponent(name)}`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `${baseUrl}/`,
+      type: "website",
+      siteName: "面接NG発言チェッカー | NODIA",
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: rankLabel, type: "image/png" }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImageUrl],
+    },
+  };
+}
 
 export default function TopPage() {
   const ranks = [...RANK_THRESHOLDS].reverse();

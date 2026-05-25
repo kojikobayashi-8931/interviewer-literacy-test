@@ -29,6 +29,8 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     : `診断結果：${rankLabel} | 面接NG発言チェッカー`;
   const description = `${score}/23問正解 | 面接NG発言チェッカー by NODIA`;
   const ogImageUrl = `${baseUrl}/api/og?rank=${encodeURIComponent(rankId)}&score=${encodeURIComponent(score)}&name=${encodeURIComponent(name)}`;
+  // og:urlはパラメータ付きURLにする（Facebookがog:urlを再クロールするため）
+  const pageUrl = `${baseUrl}/?rank=${encodeURIComponent(rankId)}&score=${encodeURIComponent(score)}${name ? `&n=${encodeURIComponent(name)}` : ""}`;
 
   return {
     title,
@@ -36,7 +38,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/`,
+      url: pageUrl,
       type: "website",
       siteName: "面接NG発言チェッカー | NODIA",
       images: [{ url: ogImageUrl, width: 1200, height: 630, alt: rankLabel, type: "image/png" }],

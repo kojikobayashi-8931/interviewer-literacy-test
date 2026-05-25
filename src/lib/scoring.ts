@@ -5,7 +5,7 @@ export const RANK_THRESHOLDS: Rank[] = [
   {
     grade: "S",
     id: "grandmaster",
-    label: "面接セーフティ職人",
+    label: "面接リテラシー 最高水準",
     riskLevel: "低め",
     riskColor: "#27AE60",
     message:
@@ -17,7 +17,7 @@ export const RANK_THRESHOLDS: Rank[] = [
   {
     grade: "A",
     id: "master",
-    label: "面接防火管理者",
+    label: "面接リテラシー 上位水準",
     riskLevel: "やや低め",
     riskColor: "#2D8B92",
     message:
@@ -29,7 +29,7 @@ export const RANK_THRESHOLDS: Rank[] = [
   {
     grade: "B",
     id: "path",
-    label: "火種センサー搭載中",
+    label: "面接リテラシー 標準水準",
     riskLevel: "普通",
     riskColor: "#E67E22",
     message:
@@ -41,7 +41,7 @@ export const RANK_THRESHOLDS: Rank[] = [
   {
     grade: "C",
     id: "step",
-    label: "消火器スタンバイ",
+    label: "面接リテラシー 要強化",
     riskLevel: "やや高め",
     riskColor: "#E74C3C",
     message:
@@ -53,7 +53,7 @@ export const RANK_THRESHOLDS: Rank[] = [
   {
     grade: "D",
     id: "egg",
-    label: "面接室に消火器必須",
+    label: "面接リテラシー 要研修",
     riskLevel: "高め",
     riskColor: "#C0392B",
     message:

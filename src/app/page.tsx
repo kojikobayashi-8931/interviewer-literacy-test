@@ -134,7 +134,7 @@ export default function TopPage() {
             5段階の炎上リスクで診断
           </h2>
           <p className="text-center font-body text-sm text-text mb-10" style={{ opacity: 0.7 }}>
-            正答率95%以上で「職人」、50%未満は「消火器必須」レベル
+            正答率95%以上で「最高水準」、50%未満は「要研修」レベル
           </p>
 
           {/* スマホ: 縦並び（リスク高め → 低め） */}

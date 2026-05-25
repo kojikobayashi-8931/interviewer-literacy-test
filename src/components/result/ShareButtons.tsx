@@ -54,7 +54,7 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
     <div>
       <h3 className="font-display text-lg font-bold text-main mb-1">結果をシェア</h3>
       <p className="text-xs text-text font-body mb-4" style={{ opacity: 0.6 }}>
-        段位とランクアイコンがSNSカードとして表示されます
+        ランクアイコンがSNSカードとして表示されます
       </p>
       <div className="flex flex-wrap gap-3">
         {/* X (Twitter) */}

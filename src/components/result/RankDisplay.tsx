@@ -33,9 +33,6 @@ export function RankDisplay({ rank, correctCount, totalQuestions }: RankDisplayP
       </div>
 
       {/* 称号 */}
-      <p className="font-body text-xs text-text mb-1 md:mb-1" style={{ opacity: 0.55 }}>
-        あなたの称号
-      </p>
       <h2 className="font-display text-2xl md:text-4xl font-bold text-main mb-1 md:mb-2 leading-tight">
         {rank.label}
       </h2>

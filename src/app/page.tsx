@@ -4,6 +4,9 @@ import Link from "next/link";
 import { RANK_THRESHOLDS } from "@/src/lib/scoring";
 import { RankIcon } from "@/src/components/ui/RankIcon";
 
+// searchParamsを使うため動的レンダリングを強制
+export const dynamic = "force-dynamic";
+
 type Props = {
   searchParams: { rank?: string; score?: string; n?: string };
 };
@@ -13,7 +16,6 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   const score = searchParams.score ?? "0";
   const name = searchParams.n ?? "";
 
-  // ランクパラメータがない場合はデフォルトのメタデータ（layout.tsxから継承）
   if (!rankId) return {};
 
   const headersList = headers();
@@ -29,8 +31,6 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     : `診断結果：${rankLabel} | 面接NG発言チェッカー`;
   const description = `${score}/23問正解 | 面接NG発言チェッカー by NODIA`;
   const ogImageUrl = `${baseUrl}/api/og?rank=${encodeURIComponent(rankId)}&score=${encodeURIComponent(score)}&name=${encodeURIComponent(name)}`;
-  // og:urlはパラメータ付きURLにする（Facebookがog:urlを再クロールするため）
-  const pageUrl = `${baseUrl}/?rank=${encodeURIComponent(rankId)}&score=${encodeURIComponent(score)}${name ? `&n=${encodeURIComponent(name)}` : ""}`;
 
   return {
     title,
@@ -38,16 +38,22 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     openGraph: {
       title,
       description,
-      url: pageUrl,
       type: "website",
       siteName: "面接NG発言チェッカー | NODIA",
-      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: rankLabel, type: "image/png" }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [ogImageUrl],
+    },
+    // og:image / twitter:image を other で直接指定
+    // （Next.js 14 の openGraph.images マージ問題を回避）
+    other: {
+      "og:image": ogImageUrl,
+      "og:image:width": "1200",
+      "og:image:height": "630",
+      "og:image:alt": rankLabel,
+      "twitter:image": ogImageUrl,
     },
   };
 }

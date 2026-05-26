@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     siteName: "面接NG発言チェッカー | NODIA",
     images: [
       {
-        url: "/logo.png",
+        url: "/api/og",
         width: 1200,
         height: 630,
         alt: "面接NG発言チェッカー | NODIA",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    images: ["/logo.png"],
+    images: ["/api/og"],
   },
 };
 

@@ -40,20 +40,13 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
       description,
       type: "website",
       siteName: "面接NG発言チェッカー | NODIA",
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: rankLabel }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-    },
-    // og:image / twitter:image を other で直接指定
-    // （Next.js 14 の openGraph.images マージ問題を回避）
-    other: {
-      "og:image": ogImageUrl,
-      "og:image:width": "1200",
-      "og:image:height": "630",
-      "og:image:alt": rankLabel,
-      "twitter:image": ogImageUrl,
+      images: [ogImageUrl],
     },
   };
 }

@@ -36,6 +36,16 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // スマホ向けWeb Share API（Facebook・LINE・その他を含むネイティブ共有シート）
+  const canWebShare = typeof navigator !== "undefined" && !!navigator.share;
+  const handleNativeShare = async () => {
+    try {
+      await navigator.share({ title: shareText, url: shareUrl });
+    } catch {
+      // キャンセルまたは非対応の場合は何もしない
+    }
+  };
+
   const btnClass =
     "inline-flex items-center gap-2 px-4 py-2.5 rounded-lg font-body font-semibold text-sm transition-all duration-200";
 
@@ -46,7 +56,21 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
         ランクアイコンがSNSカードとして表示されます
       </p>
       <div className="flex flex-wrap gap-3">
-        {/* X (Twitter) */}
+
+        {/* ── スマホ：Web Share API ネイティブ共有シート ─────────────────── */}
+        {canWebShare && (
+          <button
+            onClick={handleNativeShare}
+            className={`${btnClass} bg-accent text-white hover:opacity-90`}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
+            </svg>
+            シェアする
+          </button>
+        )}
+
+        {/* ── X (Twitter)：スマホ・PC 両方に表示 ──────────────────────── */}
         <a
           href={twitterUrl}
           target="_blank"
@@ -59,39 +83,42 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
           X でシェア
         </a>
 
-        {/* Facebook */}
-        <a
-          href={facebookUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`${btnClass} bg-[#1877F2] text-white hover:bg-[#1565C0]`}
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-          </svg>
-          Facebook
-        </a>
+        {/* ── Facebook / LinkedIn：PC のみ表示（スマホは Web Share でカバー）── */}
+        {!canWebShare && (
+          <>
+            <a
+              href={facebookUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${btnClass} bg-[#1877F2] text-white hover:bg-[#1565C0]`}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+              </svg>
+              Facebook
+            </a>
+            <a
+              href={linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${btnClass} bg-[#0077B5] text-white hover:bg-[#005885]`}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+              </svg>
+              LinkedIn
+            </a>
+          </>
+        )}
 
-        {/* LinkedIn */}
-        <a
-          href={linkedinUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`${btnClass} bg-[#0077B5] text-white hover:bg-[#005885]`}
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-          </svg>
-          LinkedIn
-        </a>
-
-        {/* コピー */}
+        {/* ── コピー：スマホ・PC 両方に表示 ──────────────────────────── */}
         <button
           onClick={handleCopy}
           className={`${btnClass} bg-surface border-2 border-border text-main hover:border-accent hover:text-accent`}
         >
           {copied ? "✓ コピー完了" : "テキストをコピー"}
         </button>
+
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import Link from "next/link";
 import { RANK_THRESHOLDS } from "@/src/lib/scoring";
 import { RankIcon } from "@/src/components/ui/RankIcon";
@@ -18,11 +17,6 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 
   if (!rankId) return {};
 
-  const headersList = headers();
-  const host = headersList.get("host") ?? "localhost:3000";
-  const proto = headersList.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
-  const baseUrl = `${proto}://${host}`;
-
   const rank = RANK_THRESHOLDS.find((r) => r.id === rankId);
   const rankLabel = rank ? `${rank.label}（${rank.grade}）` : "要研修（D）";
 
@@ -30,7 +24,6 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     ? `${name}さんの診断結果：${rankLabel} | 面接NG発言チェッカー`
     : `診断結果：${rankLabel} | 面接NG発言チェッカー`;
   const description = `${score}/23問正解 | 面接NG発言チェッカー by NODIA`;
-  const ogImageUrl = `${baseUrl}/api/og?rank=${encodeURIComponent(rankId)}&score=${encodeURIComponent(score)}&name=${encodeURIComponent(name)}`;
 
   return {
     title,
@@ -40,13 +33,13 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
       description,
       type: "website",
       siteName: "面接NG発言チェッカー | NODIA",
-      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: rankLabel }],
+      images: [{ url: "/logo.png", alt: "面接NG発言チェッカー | NODIA" }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [ogImageUrl],
+      images: ["/logo.png"],
     },
   };
 }

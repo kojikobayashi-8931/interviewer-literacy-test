@@ -17,9 +17,19 @@ export const metadata: Metadata = {
     title: "面接NG発言チェッカー | NODIA",
     description: "その質問、アウトかもしれません。23問で面接リテラシーを診断。",
     type: "website",
+    siteName: "面接NG発言チェッカー | NODIA",
+    images: [
+      {
+        url: "/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "面接NG発言チェッカー | NODIA",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
+    images: ["/logo.png"],
   },
 };
 

@@ -4,9 +4,22 @@ import { RANK_THRESHOLDS } from "@/src/lib/scoring";
 
 export const runtime = "edge";
 
+// Noto Sans JP（日本語フォント）をjsDelivrから取得
+async function loadJapaneseFont(): Promise<ArrayBuffer | null> {
+  try {
+    const res = await fetch(
+      "https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-jp@5.0.12/files/noto-sans-jp-japanese-700-normal.woff2",
+      { cache: "force-cache" }
+    );
+    if (!res.ok) return null;
+    return res.arrayBuffer();
+  } catch {
+    return null;
+  }
+}
+
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
-
   const rankId = url.searchParams.get("rank") ?? "egg";
   const score = parseInt(url.searchParams.get("score") ?? "0", 10);
   const name = url.searchParams.get("name") ?? "";
@@ -19,6 +32,13 @@ export async function GET(req: NextRequest) {
   const rate = Math.round((score / total) * 1000) / 10;
   const riskColor = rank.riskColor;
 
+  // 日本語フォント読み込み（失敗しても続行）
+  const fontData = await loadJapaneseFont();
+  const fonts = fontData
+    ? [{ name: "NotoSansJP", data: fontData, weight: 700 as const, style: "normal" as const }]
+    : [];
+  const ff = fontData ? "NotoSansJP, sans-serif" : "sans-serif";
+
   return new ImageResponse(
     (
       <div
@@ -30,7 +50,7 @@ export async function GET(req: NextRequest) {
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: "#2C3E50",
-          fontFamily: "sans-serif",
+          fontFamily: ff,
           padding: "0 80px",
         }}
       >
@@ -44,7 +64,7 @@ export async function GET(req: NextRequest) {
             marginBottom: "20px",
           }}
         >
-          Interview NG Checker | NODIA
+          面接NG発言チェッカー | NODIA
         </div>
 
         {/* 炎上リスクバッジ */}
@@ -68,10 +88,8 @@ export async function GET(req: NextRequest) {
               backgroundColor: riskColor,
             }}
           />
-          <span
-            style={{ color: riskColor, fontSize: "24px", fontWeight: 700 }}
-          >
-            Risk: {rank.riskLevel}
+          <span style={{ color: riskColor, fontSize: "24px", fontWeight: 700 }}>
+            {`面接炎上リスク：${rank.riskLevel}`}
           </span>
         </div>
 
@@ -86,7 +104,7 @@ export async function GET(req: NextRequest) {
               marginBottom: "18px",
             }}
           >
-            {name}
+            {`${name}さんの診断結果`}
           </div>
         )}
 
@@ -103,9 +121,7 @@ export async function GET(req: NextRequest) {
             marginBottom: "20px",
           }}
         >
-          <span
-            style={{ color: "#FFFFFF", fontSize: "60px", fontWeight: 700 }}
-          >
+          <span style={{ color: "#FFFFFF", fontSize: "60px", fontWeight: 700 }}>
             {rank.grade}
           </span>
         </div>
@@ -129,22 +145,28 @@ export async function GET(req: NextRequest) {
             flexDirection: "row",
             alignItems: "center",
             gap: "20px",
+            marginBottom: "24px",
           }}
         >
-          <span
-            style={{ color: "#FFFFFF", fontSize: "28px", fontWeight: 700 }}
-          >
-            {score} / {total}
+          <span style={{ color: "#FFFFFF", fontSize: "28px", fontWeight: 700 }}>
+            {`${score} / ${total}問正解`}
           </span>
           <span style={{ color: "#A8D8DC", fontSize: "28px" }}>|</span>
-          <span
-            style={{ color: riskColor, fontSize: "32px", fontWeight: 700 }}
-          >
-            {rate}%
+          <span style={{ color: riskColor, fontSize: "32px", fontWeight: 700 }}>
+            {`${rate}%`}
           </span>
+        </div>
+
+        {/* タグライン */}
+        <div style={{ color: "#A8D8DC", fontSize: "18px" }}>
+          あなたも炎上リスクを診断してみよう →
         </div>
       </div>
     ),
-    { width: 1200, height: 630 }
+    {
+      width: 1200,
+      height: 630,
+      fonts,
+    }
   );
 }

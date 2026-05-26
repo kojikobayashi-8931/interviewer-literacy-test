@@ -1,6 +1,4 @@
-// next/og ではなく @vercel/og を直接使用
-// （WAMSバンドルをVercelのビルドパイプラインに正しく認識させるため）
-import { ImageResponse } from "@vercel/og";
+import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
 import { RANK_THRESHOLDS } from "@/src/lib/scoring";
 
@@ -8,14 +6,6 @@ export const runtime = "edge";
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
-
-  // デバッグモード
-  if (url.searchParams.get("debug") === "1") {
-    return new Response(
-      JSON.stringify({ NEXT_RUNTIME: process.env.NEXT_RUNTIME, ok: true }),
-      { headers: { "Content-Type": "application/json" } }
-    );
-  }
 
   const rankId = url.searchParams.get("rank") ?? "egg";
   const score = parseInt(url.searchParams.get("score") ?? "0", 10);
@@ -78,7 +68,9 @@ export async function GET(req: NextRequest) {
               backgroundColor: riskColor,
             }}
           />
-          <span style={{ color: riskColor, fontSize: "24px", fontWeight: 700 }}>
+          <span
+            style={{ color: riskColor, fontSize: "24px", fontWeight: 700 }}
+          >
             Risk: {rank.riskLevel}
           </span>
         </div>
@@ -111,12 +103,14 @@ export async function GET(req: NextRequest) {
             marginBottom: "20px",
           }}
         >
-          <span style={{ color: "#FFFFFF", fontSize: "60px", fontWeight: 700 }}>
+          <span
+            style={{ color: "#FFFFFF", fontSize: "60px", fontWeight: 700 }}
+          >
             {rank.grade}
           </span>
         </div>
 
-        {/* ランク称号（ASCII） */}
+        {/* ランク称号 */}
         <div
           style={{
             color: "#FFFFFF",
@@ -137,11 +131,15 @@ export async function GET(req: NextRequest) {
             gap: "20px",
           }}
         >
-          <span style={{ color: "#FFFFFF", fontSize: "28px", fontWeight: 700 }}>
+          <span
+            style={{ color: "#FFFFFF", fontSize: "28px", fontWeight: 700 }}
+          >
             {score} / {total}
           </span>
           <span style={{ color: "#A8D8DC", fontSize: "28px" }}>|</span>
-          <span style={{ color: riskColor, fontSize: "32px", fontWeight: 700 }}>
+          <span
+            style={{ color: riskColor, fontSize: "32px", fontWeight: 700 }}
+          >
             {rate}%
           </span>
         </div>

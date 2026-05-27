@@ -36,13 +36,29 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // スマホ向けWeb Share API（Facebook・LINE・その他を含むネイティブ共有シート）
+  // スマホ向けWeb Share API
   const canWebShare = typeof navigator !== "undefined" && !!navigator.share;
   const handleNativeShare = async () => {
     try {
       await navigator.share({ title: shareText, url: shareUrl });
     } catch {
       // キャンセルまたは非対応の場合は何もしない
+    }
+  };
+
+  // Facebook: モバイルはネイティブシェアシート経由、PCはポップアップ
+  const handleFacebookShare = async () => {
+    if (canWebShare) {
+      // スマホ: ネイティブシェアシートでFacebookを含む共有メニューを開く
+      try {
+        await navigator.share({ title: shareText, url: shareUrl });
+      } catch {
+        // キャンセル or 失敗時はwebシェアURLへ直接遷移
+        window.location.href = facebookUrl;
+      }
+    } else {
+      // PC: Facebookシェアポップアップを開く
+      window.open(facebookUrl, "facebook-share", "width=580,height=296,noopener,noreferrer");
     }
   };
 
@@ -56,7 +72,7 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
         ランクアイコンがSNSカードとして表示されます
       </p>
       <div className="flex flex-wrap gap-3">
-        {/* スマホ：Web Share API（Facebook・LINE等のネイティブ共有） */}
+        {/* スマホ：Web Share API（LINE等のネイティブ共有） */}
         {canWebShare && (
           <button
             onClick={handleNativeShare}
@@ -81,18 +97,16 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
           X でシェア
         </a>
 
-        {/* Facebook */}
-        <a
-          href={facebookUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+        {/* Facebook（モバイル: navigator.share / PC: window.open） */}
+        <button
+          onClick={handleFacebookShare}
           className={`${btnClass} bg-[#1877F2] text-white hover:bg-[#1565C0]`}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
             <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
           </svg>
           Facebook
-        </a>
+        </button>
 
         {/* LinkedIn */}
         <a

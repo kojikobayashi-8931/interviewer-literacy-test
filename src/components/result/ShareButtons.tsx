@@ -25,12 +25,9 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
 
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
 
-  // スマホ: m.facebook.com/sharer.php → 投稿画面に直接遷移
-  // PC:    www.facebook.com/sharer/sharer.php
-  const isMobile = typeof navigator !== "undefined" && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  const facebookUrl = isMobile
-    ? `https://m.facebook.com/sharer.php?u=${encodeURIComponent(shareUrl)}`
-    : `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+  // PC・スマホ共通で www.facebook.com/sharer/sharer.php を使用
+  // （iOS Universal Links が www.facebook.com を認識してFBアプリのシェアダイアログを起動する）
+  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
 
   const linkedinUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(shareText)}`;
 

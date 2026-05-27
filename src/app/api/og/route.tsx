@@ -209,7 +209,7 @@ export async function GET() {
     return new Response(buf, {
       headers: {
         "Content-Type": "image/png",
-        "Cache-Control": "public, max-age=60",
+        "Cache-Control": "public, max-age=86400, s-maxage=86400",
       },
     });
   } catch {

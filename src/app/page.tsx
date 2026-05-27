@@ -29,6 +29,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     title,
     description,
     openGraph: {
+      url: `/?rank=${rankId}&score=${score}${name ? `&n=${encodeURIComponent(name)}` : ""}`,
       title,
       description,
       type: "website",

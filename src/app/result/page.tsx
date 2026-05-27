@@ -23,6 +23,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     title,
     description,
     openGraph: {
+      url: `/result?correct=${score}&rank=${rankId}${rawName ? `&name=${encodeURIComponent(rawName)}` : ""}`,
       title,
       description,
       type: "website",

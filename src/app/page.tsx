@@ -201,7 +201,7 @@ export default function TopPage() {
                     炎上リスク：{rank.riskLevel}
                   </span>
                   <span className="text-main font-body text-sm font-bold block leading-snug">
-                    面接リテラシー<br />{rank.label}
+                    {rank.label.split(" ")[0]}<br />{rank.label.split(" ")[1]}
                   </span>
                 </div>
                 <span className="font-body text-xs shrink-0" style={{ color: "#4A4A4A", opacity: 0.45 }}>
@@ -228,7 +228,7 @@ export default function TopPage() {
                   {rank.riskLevel}
                 </span>
                 <span className="text-main font-body text-xs font-bold leading-snug text-center">
-                  面接リテラシー<br />{rank.label}
+                  {rank.label.split(" ")[0]}<br />{rank.label.split(" ")[1]}
                 </span>
                 <span className="font-body text-xs mt-1.5" style={{ color: "#4A4A4A", opacity: 0.45 }}>
                   {rank.minScore}〜{rank.maxScore}問

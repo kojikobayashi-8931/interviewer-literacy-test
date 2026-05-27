@@ -17,6 +17,11 @@
   --font-body: 'Noto Sans JP', sans-serif;
 }
 
+html, body {
+  overflow-x: hidden; /* SPでフォーム入力時の横崩れ防止 */
+  max-width: 100%;
+}
+
 body {
   font-family: var(--font-body);
   color: var(--color-text);

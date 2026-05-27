@@ -91,8 +91,9 @@ export function LeadForm({ answers }: LeadFormProps) {
     router.push(`/result?${params.toString()}`);
   };
 
+  // text-base(16px) = iOSのauto-zoom防止（16px未満だとSafariがズームして画面崩れが起きる）
   const inputClass =
-    "w-full border-2 border-border rounded-lg px-4 py-3 text-text font-body text-sm focus:outline-none focus:border-accent bg-base";
+    "w-full border-2 border-border rounded-lg px-4 py-3 text-text font-body text-base focus:outline-none focus:border-accent bg-base";
 
   return (
     <div className="space-y-5">

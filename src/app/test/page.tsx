@@ -28,7 +28,16 @@ export default function TestPage() {
     resetAnswers();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const router = useRouter();
+
+  // 設問ごとにURLを更新（離脱計測用）
+  useEffect(() => {
+    if (phase === "test") {
+      const questionNumber = currentIndex + 1;
+      window.history.replaceState(null, "", `/test?q=${questionNumber}`);
+    }
+  }, [currentIndex, phase]);
 
   const handleAnswer = (selectedId: string) => {
     const { question } = allQuestions[currentIndex];

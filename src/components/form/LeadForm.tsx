@@ -173,7 +173,7 @@ export function LeadForm({ answers }: LeadFormProps) {
           >
             プライバシーポリシー
           </a>
-          に同意して結果を見る <span className="text-incorrect">*</span>
+          に同意する <span className="text-incorrect">*</span>
         </label>
       </div>
 
@@ -187,7 +187,7 @@ export function LeadForm({ answers }: LeadFormProps) {
         size="lg"
         className="w-full"
       >
-        {submitting ? "判定中..." : "結果を判定する"}
+        {submitting ? "判定中..." : "判定する"}
       </Button>
     </div>
   );

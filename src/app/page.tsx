@@ -188,7 +188,7 @@ export default function TopPage() {
             {RANK_THRESHOLDS.map((rank) => (
               <div
                 key={rank.id}
-                className="flex items-center gap-4 p-4 bg-white rounded-2xl border-2 transition-colors shadow-sm"
+                className="flex items-center gap-4 p-4 bg-white rounded-2xl border-2 shadow-sm"
                 style={{ borderColor: `${rank.riskColor}40` }}
               >
                 <RankIcon rankId={rank.id} size={56} className="shrink-0" />
@@ -214,7 +214,7 @@ export default function TopPage() {
             {ranks.map((rank) => (
               <div
                 key={rank.id}
-                className="flex flex-col items-center text-center p-5 bg-white rounded-2xl border-2 transition-colors shadow-sm"
+                className="flex flex-col items-center text-center p-5 bg-white rounded-2xl border-2 shadow-sm"
                 style={{ borderColor: `${rank.riskColor}40` }}
               >
                 <RankIcon rankId={rank.id} size={64} className="mb-3" />

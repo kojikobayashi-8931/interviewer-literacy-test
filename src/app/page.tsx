@@ -161,7 +161,7 @@ export default function TopPage() {
             ].map((item) => (
               <div
                 key={item.title}
-                className="rounded-2xl p-6 border-2 border-border hover:border-[#2D8B92] transition-colors"
+                className="rounded-2xl p-6 border-2 border-border"
               >
                 <span className="text-4xl mb-4 block">{item.icon}</span>
                 <h3 className="font-body font-bold text-main text-base mb-2">{item.title}</h3>
@@ -200,7 +200,9 @@ export default function TopPage() {
                     <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: rank.riskColor }} />
                     炎上リスク：{rank.riskLevel}
                   </span>
-                  <span className="text-main font-body text-sm font-bold block leading-tight">{rank.label}</span>
+                  <span className="text-main font-body text-sm font-bold block leading-snug">
+                    面接リテラシー<br />{rank.label}
+                  </span>
                 </div>
                 <span className="font-body text-xs shrink-0" style={{ color: "#4A4A4A", opacity: 0.45 }}>
                   {rank.minScore}〜{rank.maxScore}問
@@ -225,8 +227,8 @@ export default function TopPage() {
                   <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: rank.riskColor }} />
                   {rank.riskLevel}
                 </span>
-                <span className="text-main font-body text-xs font-bold leading-tight">
-                  {rank.label}
+                <span className="text-main font-body text-xs font-bold leading-snug text-center">
+                  面接リテラシー<br />{rank.label}
                 </span>
                 <span className="font-body text-xs mt-1.5" style={{ color: "#4A4A4A", opacity: 0.45 }}>
                   {rank.minScore}〜{rank.maxScore}問

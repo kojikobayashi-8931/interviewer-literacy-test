@@ -1,17 +1,8 @@
-<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
-  <rect width="200" height="220" fill="white" rx="16"/>
-  <ellipse cx="100" cy="130" rx="55" ry="68" fill="#FFF3C4" stroke="#F5C842" stroke-width="3"/>
-  <polyline points="100,64 91,82 103,97 93,113" stroke="#F5A623" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-  <circle cx="80" cy="122" r="11" fill="white" stroke="#333" stroke-width="2"/>
-  <circle cx="120" cy="122" r="11" fill="white" stroke="#333" stroke-width="2"/>
-  <circle cx="82" cy="124" r="5.5" fill="#333"/>
-  <circle cx="122" cy="124" r="5.5" fill="#333"/>
-  <circle cx="84" cy="122" r="2" fill="white"/>
-  <circle cx="124" cy="122" r="2" fill="white"/>
-  <path d="M82,142 Q100,155 118,142" stroke="#333" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-  <ellipse cx="67" cy="142" rx="11" ry="6" fill="#FFB3C1" opacity="0.65"/>
-  <ellipse cx="133" cy="142" rx="11" ry="6" fill="#FFB3C1" opacity="0.65"/>
-  <line x1="100" y1="64" x2="100" y2="44" stroke="#7BC67E" stroke-width="3" stroke-linecap="round"/>
-  <ellipse cx="100" cy="38" rx="11" ry="8" fill="#7BC67E" transform="rotate(-20,100,38)"/>
-  <ellipse cx="113" cy="48" rx="9" ry="6" fill="#5DAE61" transform="rotate(30,113,48)"/>
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Lv.1 要研修 - 炎上リスク高め</title>
+  <path d="M60 6 L104 22 L104 72 Q104 106 60 120 Q16 106 16 72 L16 22 Z" fill="#FFF3E0" stroke="#EF5350" stroke-width="2.5"/>
+  <path d="M36 102 Q28 86 34 72 Q36 80 40 76 Q36 60 44 48 Q46 64 52 60 Q44 44 52 30 Q60 44 58 58 Q66 52 62 68 Q68 72 68 82 Q72 68 70 56 Q80 66 78 82 Q84 88 80 102 Z" fill="#EF5350"/>
+  <path d="M52 102 Q48 92 52 84 Q54 90 58 86 Q54 76 60 66 Q64 76 62 84 Q66 80 66 90 Q68 96 66 102 Z" fill="#FF8A65"/>
+  <rect x="38" y="106" width="44" height="14" rx="7" fill="#EF5350"/>
+  <text x="60" y="117" font-family="'Helvetica Neue',Arial,sans-serif" font-size="11" font-weight="700" text-anchor="middle" fill="#fff">Lv.1</text>
 </svg>

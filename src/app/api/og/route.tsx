@@ -2,101 +2,87 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
-export async function GET(request: Request) {
-  const { origin } = new URL(request.url);
-  // 同一オリジンからロゴを取得（base64埋め込みを避けてSatoriの互換性を確保）
-  const logoUrl = `${origin}/logo.png`;
-
-  return new ImageResponse(
+// 外部画像fetch不要・日本語フォント不要・CSS純粋実装
+// → Satorがクラッシュする要因をゼロにする
+export async function GET() {
+  const image = new ImageResponse(
     (
       <div
         style={{
           width: "1200px",
           height: "630px",
-          background: "linear-gradient(135deg, #1a2a3a 0%, #2C3E50 60%, #1f3a4a 100%)",
+          backgroundColor: "#2C3E50",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          position: "relative",
         }}
       >
-        {/* 装飾円（左下） */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: "-60px",
-            left: "-60px",
-            width: "240px",
-            height: "240px",
-            borderRadius: "50%",
-            background: "rgba(45,139,146,0.12)",
-            display: "flex",
-          }}
-        />
-        {/* 装飾円（右上） */}
-        <div
-          style={{
-            position: "absolute",
-            top: "-80px",
-            right: "-80px",
-            width: "360px",
-            height: "360px",
-            borderRadius: "50%",
-            background: "rgba(45,139,146,0.12)",
-            display: "flex",
-          }}
-        />
-
-        {/* NODIAロゴ（1201x408px → 480x163pxに縮小） */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={logoUrl}
-          width={480}
-          height={163}
-          alt="NODIA"
-        />
+        {/* NODIA ロゴ（CSS テキスト版） */}
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <span
+            style={{
+              fontSize: 120,
+              fontWeight: 900,
+              color: "white",
+              fontFamily: "sans-serif",
+              letterSpacing: "-2px",
+            }}
+          >
+            NOD
+          </span>
+          <span
+            style={{
+              fontSize: 120,
+              fontWeight: 900,
+              color: "#2D8B92",
+              fontFamily: "sans-serif",
+              letterSpacing: "-2px",
+            }}
+          >
+            I
+          </span>
+          <span
+            style={{
+              fontSize: 120,
+              fontWeight: 900,
+              color: "white",
+              fontFamily: "sans-serif",
+              letterSpacing: "-2px",
+            }}
+          >
+            A
+          </span>
+        </div>
 
         {/* アクセントライン */}
         <div
           style={{
-            marginTop: "36px",
-            width: "160px",
-            height: "3px",
-            background: "#2D8B92",
-            borderRadius: "2px",
+            width: "200px",
+            height: "4px",
+            backgroundColor: "#2D8B92",
+            marginTop: "16px",
             display: "flex",
           }}
         />
 
-        {/* ブランドタグ */}
+        {/* プロダクト名 */}
         <div
           style={{
-            marginTop: "24px",
-            background: "rgba(45,139,146,0.20)",
-            border: "1px solid rgba(45,139,146,0.45)",
-            borderRadius: "999px",
-            padding: "10px 32px",
             display: "flex",
-            alignItems: "center",
-            gap: "10px",
+            marginTop: "24px",
+            padding: "14px 40px",
+            borderRadius: "40px",
+            backgroundColor: "rgba(45,139,146,0.2)",
+            border: "1px solid rgba(45,139,146,0.4)",
           }}
         >
-          <div
-            style={{
-              width: "8px",
-              height: "8px",
-              borderRadius: "50%",
-              background: "#2D8B92",
-              display: "flex",
-            }}
-          />
           <span
             style={{
               color: "#A8D8DC",
-              fontSize: "20px",
+              fontSize: "24px",
               fontWeight: 600,
-              letterSpacing: "0.12em",
+              letterSpacing: "4px",
               fontFamily: "sans-serif",
             }}
           >
@@ -105,9 +91,15 @@ export async function GET(request: Request) {
         </div>
       </div>
     ),
-    {
-      width: 1200,
-      height: 630,
-    }
+    { width: 1200, height: 630 }
   );
+
+  // Content-Type を明示的に image/png に設定（Facebook要件）
+  const buffer = await image.arrayBuffer();
+  return new Response(buffer, {
+    headers: {
+      "Content-Type": "image/png",
+      "Cache-Control": "public, max-age=3600, s-maxage=3600",
+    },
+  });
 }

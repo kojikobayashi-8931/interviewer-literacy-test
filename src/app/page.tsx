@@ -6,6 +6,9 @@ import { RankIcon } from "@/src/components/ui/RankIcon";
 // searchParamsを使うため動的レンダリングを強制
 export const dynamic = "force-dynamic";
 
+const SITE_URL = "https://interviewer-literacy-test.vercel.app";
+const OG_IMAGE_URL = `${SITE_URL}/api/og`;
+
 type Props = {
   searchParams: { rank?: string; score?: string; n?: string };
 };
@@ -29,18 +32,18 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     title,
     description,
     openGraph: {
-      url: `/?rank=${rankId}&score=${score}${name ? `&n=${encodeURIComponent(name)}` : ""}`,
+      url: `${SITE_URL}/?rank=${rankId}&score=${score}${name ? `&n=${encodeURIComponent(name)}` : ""}`,
       title,
       description,
       type: "website",
       siteName: "面接NG発言チェッカー | NODIA",
-      images: [{ url: "/api/og", width: 1200, height: 630, alt: "面接NG発言チェッカー | NODIA" }],
+      images: [{ url: OG_IMAGE_URL, width: 1200, height: 630, type: "image/png", alt: "面接NG発言チェッカー | NODIA" }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: ["/api/og"],
+      images: [OG_IMAGE_URL],
     },
   };
 }

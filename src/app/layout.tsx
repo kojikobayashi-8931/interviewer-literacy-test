@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-  || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+// プレビューデプロイURLへの依存を避けるため本番URLをハードコード
+const SITE_URL = "https://interviewer-literacy-test.vercel.app";
+const OG_IMAGE_URL = `${SITE_URL}/api/og`;
 
 export const metadata: Metadata = {
-  metadataBase: new URL(baseUrl),
+  metadataBase: new URL(SITE_URL),
   icons: {
     icon: "https://nodia.co.jp/assets/favicon.ico",
     shortcut: "https://nodia.co.jp/assets/favicon.ico",
@@ -20,16 +21,17 @@ export const metadata: Metadata = {
     siteName: "面接NG発言チェッカー | NODIA",
     images: [
       {
-        url: "/api/og",
+        url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
+        type: "image/png",
         alt: "面接NG発言チェッカー | NODIA",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    images: ["/api/og"],
+    images: [OG_IMAGE_URL],
   },
 };
 

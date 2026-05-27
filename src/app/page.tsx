@@ -6,7 +6,7 @@ import { RankIcon } from "@/src/components/ui/RankIcon";
 // searchParamsを使うため動的レンダリングを強制
 export const dynamic = "force-dynamic";
 
-const SITE_URL = "https://interviewer-literacy-test.vercel.app";
+const SITE_URL = "https://menng-chk.nodia.co.jp";
 const OG_IMAGE_URL = `${SITE_URL}/api/og`;
 
 type Props = {

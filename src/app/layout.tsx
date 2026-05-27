@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-// プレビューデプロイURLへの依存を避けるため本番URLをハードコード
-const SITE_URL = "https://interviewer-literacy-test.vercel.app";
+// カスタムドメイン（nodia.co.jpサブドメイン）をベースURLとして使用
+const SITE_URL = "https://menng-chk.nodia.co.jp";
 const OG_IMAGE_URL = `${SITE_URL}/api/og`;
 
 export const metadata: Metadata = {

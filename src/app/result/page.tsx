@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { RANK_THRESHOLDS } from "@/src/lib/scoring";
 import ResultContent from "./ResultContent";
 
-const SITE_URL = "https://interviewer-literacy-test.vercel.app";
+const SITE_URL = "https://menng-chk.nodia.co.jp";
 const OG_IMAGE_URL = `${SITE_URL}/api/og`;
 
 type Props = {

@@ -46,20 +46,10 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
     }
   };
 
-  // Facebook: モバイルはネイティブシェアシート経由、PCはポップアップ
-  const handleFacebookShare = async () => {
-    if (canWebShare) {
-      // スマホ: ネイティブシェアシートでFacebookを含む共有メニューを開く
-      try {
-        await navigator.share({ title: shareText, url: shareUrl });
-      } catch {
-        // キャンセル or 失敗時はwebシェアURLへ直接遷移
-        window.location.href = facebookUrl;
-      }
-    } else {
-      // PC: Facebookシェアポップアップを開く
-      window.open(facebookUrl, "facebook-share", "width=580,height=296,noopener,noreferrer");
-    }
+  // Facebook: PC・スマホ共通で新しいタブ/Facebookアプリへ直接遷移
+  // （navigator.shareは経由せず、Facebookシェア画面を直接開く）
+  const handleFacebookShare = () => {
+    window.open(facebookUrl, "_blank", "noopener,noreferrer");
   };
 
   const btnClass =

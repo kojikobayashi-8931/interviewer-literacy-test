@@ -31,13 +31,13 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
       description,
       type: "website",
       siteName: "面接NG発言チェッカー | NODIA",
-      images: [{ url: `${OG_IMAGE_URL}?rank=${rankId}&score=${score}`, width: 1200, height: 630, type: "image/png", alt: "面接NG発言チェッカー | NODIA" }],
+      images: [{ url: OG_IMAGE_URL, width: 1200, height: 630, type: "image/png", alt: "面接NG発言チェッカー | NODIA" }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [`${OG_IMAGE_URL}?rank=${rankId}&score=${score}`],
+      images: [OG_IMAGE_URL],
     },
   };
 }

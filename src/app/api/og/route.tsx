@@ -2,9 +2,26 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
-// 外部画像fetch不要・日本語フォント不要・CSS純粋実装
-// → Satorがクラッシュする要因をゼロにする
-export async function GET() {
+// ランク情報（日本語なし・外部fetch不要）
+const RANK_INFO: Record<string, { grade: string; color: string }> = {
+  grandmaster: { grade: "S", color: "#27AE60" },
+  master:      { grade: "A", color: "#2D8B92" },
+  path:        { grade: "B", color: "#E67E22" },
+  step:        { grade: "C", color: "#E74C3C" },
+  egg:         { grade: "D", color: "#C0392B" },
+};
+
+const TOTAL = 23;
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const rankId  = searchParams.get("rank")  ?? "egg";
+  const scoreRaw = searchParams.get("score") ?? "0";
+
+  const rank     = RANK_INFO[rankId] ?? RANK_INFO.egg;
+  const scoreNum = Math.min(Math.max(parseInt(scoreRaw, 10) || 0, 0), TOTAL);
+  const pct      = Math.round((scoreNum / TOTAL) * 100);
+
   const image = new ImageResponse(
     (
       <div
@@ -18,71 +35,73 @@ export async function GET() {
           justifyContent: "center",
         }}
       >
-        {/* NODIA ロゴ（CSS テキスト版） */}
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <span
-            style={{
-              fontSize: 120,
-              fontWeight: 900,
-              color: "white",
-              fontFamily: "sans-serif",
-              letterSpacing: "-2px",
-            }}
-          >
-            NOD
+        {/* NODIA ロゴ（小） */}
+        <div style={{ display: "flex", alignItems: "baseline", marginBottom: "8px" }}>
+          <span style={{ fontSize: 32, fontWeight: 900, color: "white",   fontFamily: "sans-serif", letterSpacing: "-1px" }}>NOD</span>
+          <span style={{ fontSize: 32, fontWeight: 900, color: "#2D8B92", fontFamily: "sans-serif", letterSpacing: "-1px" }}>I</span>
+          <span style={{ fontSize: 32, fontWeight: 900, color: "white",   fontFamily: "sans-serif", letterSpacing: "-1px" }}>A</span>
+        </div>
+
+        {/* 細い区切り線 */}
+        <div style={{ width: "60px", height: "2px", backgroundColor: "rgba(255,255,255,0.2)", marginBottom: "20px", display: "flex" }} />
+
+        {/* ランクグレード（大） */}
+        <div
+          style={{
+            fontSize: 200,
+            fontWeight: 900,
+            color: rank.color,
+            fontFamily: "sans-serif",
+            lineHeight: 1,
+          }}
+        >
+          {rank.grade}
+        </div>
+
+        {/* スコア表示 */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "baseline",
+            gap: "12px",
+            marginTop: "8px",
+          }}
+        >
+          <span style={{ fontSize: 52, fontWeight: 700, color: "white", fontFamily: "sans-serif" }}>
+            {scoreNum}
+          </span>
+          <span style={{ fontSize: 28, color: "rgba(255,255,255,0.45)", fontFamily: "sans-serif" }}>
+            / {TOTAL}
           </span>
           <span
             style={{
-              fontSize: 120,
-              fontWeight: 900,
-              color: "#2D8B92",
+              fontSize: 28,
+              fontWeight: 700,
+              color: rank.color,
               fontFamily: "sans-serif",
-              letterSpacing: "-2px",
+              marginLeft: "4px",
             }}
           >
-            I
-          </span>
-          <span
-            style={{
-              fontSize: 120,
-              fontWeight: 900,
-              color: "white",
-              fontFamily: "sans-serif",
-              letterSpacing: "-2px",
-            }}
-          >
-            A
+            ({pct}%)
           </span>
         </div>
 
-        {/* アクセントライン */}
+        {/* ブランドタグ */}
         <div
           style={{
-            width: "200px",
-            height: "4px",
-            backgroundColor: "#2D8B92",
-            marginTop: "16px",
-            display: "flex",
-          }}
-        />
-
-        {/* プロダクト名 */}
-        <div
-          style={{
-            display: "flex",
-            marginTop: "24px",
-            padding: "14px 40px",
+            marginTop: "32px",
+            padding: "10px 28px",
             borderRadius: "40px",
             backgroundColor: "rgba(45,139,146,0.2)",
             border: "1px solid rgba(45,139,146,0.4)",
+            display: "flex",
           }}
         >
           <span
             style={{
               color: "#A8D8DC",
-              fontSize: "24px",
-              fontWeight: 600,
-              letterSpacing: "4px",
+              fontSize: "18px",
+              letterSpacing: "3px",
               fontFamily: "sans-serif",
             }}
           >
@@ -94,7 +113,6 @@ export async function GET() {
     { width: 1200, height: 630 }
   );
 
-  // Content-Type を明示的に image/png に設定（Facebook要件）
   const buffer = await image.arrayBuffer();
   return new Response(buffer, {
     headers: {

@@ -19,9 +19,10 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
     : `私の面接炎上リスク診断：「${rank.label}」 | ${correctCount}/${totalQuestions}問正解（${rate}%）| 炎上リスク：${rank.riskLevel} | 面接NG発言チェッカー by NODIA`;
 
   // シェアURLはトップページ（ランク情報をパラメータとして付与してOGP画像を動的生成）
+  // SSR時は本番URLをフォールバックとして使用し、空文字を防ぐ
   const shareUrl = typeof window !== "undefined"
     ? `${window.location.origin}/?rank=${encodeURIComponent(rank.id)}&score=${encodeURIComponent(correctCount)}${name ? `&n=${encodeURIComponent(name)}` : ""}`
-    : "";
+    : `https://menng-chk.nodia.co.jp/?rank=${encodeURIComponent(rank.id)}&score=${encodeURIComponent(correctCount)}`;
 
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
 
@@ -46,13 +47,13 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
   };
 
   // Facebook シェアハンドラ
-  // window.open + noopener で iOS Universal Links を回避する。
-  // window.location.href は Universal Links を発火させ Facebook アプリが開くが、
-  // FB アプリは /sharer/sharer.php をシェア画面ではなくフィードとして解釈するため NG。
-  // noopener を付けた window.open は Universal Links を発火させないため、
-  // Safari の新規タブで Facebook のウェブ版シェア画面が直接開く。
+  // noopener を除去することで iOS のポップアップブロックを回避する。
+  // window.open がブロックされた場合は location.href にフォールバック。
   const handleFacebookClick = () => {
-    window.open(facebookUrl, "_blank", "noopener,noreferrer");
+    const w = window.open(facebookUrl, "_blank");
+    if (!w) {
+      window.location.href = facebookUrl;
+    }
   };
 
   const btnClass =
@@ -92,15 +93,17 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
         </a>
 
         {/* Facebook */}
-        <button
-          onClick={handleFacebookClick}
+        <a
+          href={facebookUrl}
+          target="_blank"
+          rel="noreferrer"
           className={`${btnClass} bg-[#1877F2] text-white hover:bg-[#1565C0]`}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
             <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
           </svg>
           Facebook
-        </button>
+        </a>
 
         {/* LinkedIn */}
         <a

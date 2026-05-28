@@ -25,8 +25,6 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
 
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
 
-  // PC・スマホ共通で www.facebook.com/sharer/sharer.php を使用
-  // （iOS Universal Links が www.facebook.com を認識してFBアプリのシェアダイアログを起動する）
   const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
 
   const linkedinUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(shareText)}`;
@@ -44,6 +42,19 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
       await navigator.share({ title: shareText, url: shareUrl });
     } catch {
       // キャンセルまたは非対応の場合は何もしない
+    }
+  };
+
+  // Facebook シェアハンドラ
+  // iOS Safari では <a target="_blank" rel="noopener"> が Universal Links をブロックするため、
+  // スマホのみ window.location.href で現在タブ遷移させる → iOS が Universal Links を発火させ
+  // Facebook アプリのシェアダイアログを起動する
+  const isMobile = typeof navigator !== "undefined" && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const handleFacebookClick = () => {
+    if (isMobile) {
+      window.location.href = facebookUrl; // 現在タブ遷移 → Universal Links 発火
+    } else {
+      window.open(facebookUrl, "_blank", "noopener,noreferrer"); // PC: 新規タブ
     }
   };
 
@@ -69,6 +80,7 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
             シェアする
           </button>
         )}
+
         {/* X (Twitter) */}
         <a
           href={twitterUrl}
@@ -82,18 +94,16 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
           X でシェア
         </a>
 
-        {/* Facebook（<a>タグでPC・スマホ共通対応） */}
-        <a
-          href={facebookUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+        {/* Facebook */}
+        <button
+          onClick={handleFacebookClick}
           className={`${btnClass} bg-[#1877F2] text-white hover:bg-[#1565C0]`}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
             <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
           </svg>
           Facebook
-        </a>
+        </button>
 
         {/* LinkedIn */}
         <a

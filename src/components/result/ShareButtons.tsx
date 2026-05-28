@@ -46,16 +46,13 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
   };
 
   // Facebook シェアハンドラ
-  // iOS Safari では <a target="_blank" rel="noopener"> が Universal Links をブロックするため、
-  // スマホのみ window.location.href で現在タブ遷移させる → iOS が Universal Links を発火させ
-  // Facebook アプリのシェアダイアログを起動する
-  const isMobile = typeof navigator !== "undefined" && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  // window.open + noopener で iOS Universal Links を回避する。
+  // window.location.href は Universal Links を発火させ Facebook アプリが開くが、
+  // FB アプリは /sharer/sharer.php をシェア画面ではなくフィードとして解釈するため NG。
+  // noopener を付けた window.open は Universal Links を発火させないため、
+  // Safari の新規タブで Facebook のウェブ版シェア画面が直接開く。
   const handleFacebookClick = () => {
-    if (isMobile) {
-      window.location.href = facebookUrl; // 現在タブ遷移 → Universal Links 発火
-    } else {
-      window.open(facebookUrl, "_blank", "noopener,noreferrer"); // PC: 新規タブ
-    }
+    window.open(facebookUrl, "_blank", "noopener,noreferrer");
   };
 
   const btnClass =

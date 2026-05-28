@@ -26,7 +26,10 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
 
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
 
-  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+  // m.facebook.com は Universal Links の対象外のため iOS でも Safari 内のウェブ版シェア画面が開く
+  const facebookUrl = typeof window !== "undefined" && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+    ? `https://m.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`
+    : `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
 
   const linkedinUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(shareText)}`;
 

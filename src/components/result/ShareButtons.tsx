@@ -26,11 +26,6 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
 
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
 
-  // m.facebook.com は Universal Links の対象外のため iOS でも Safari 内のウェブ版シェア画面が開く
-  const facebookUrl = typeof window !== "undefined" && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-    ? `https://m.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`
-    : `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
-
   const linkedinUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(shareText)}`;
 
   const handleCopy = async () => {
@@ -46,16 +41,6 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
       await navigator.share({ title: shareText, url: shareUrl });
     } catch {
       // キャンセルまたは非対応の場合は何もしない
-    }
-  };
-
-  // Facebook シェアハンドラ
-  // noopener を除去することで iOS のポップアップブロックを回避する。
-  // window.open がブロックされた場合は location.href にフォールバック。
-  const handleFacebookClick = () => {
-    const w = window.open(facebookUrl, "_blank");
-    if (!w) {
-      window.location.href = facebookUrl;
     }
   };
 
@@ -94,24 +79,6 @@ export function ShareButtons({ rank, correctCount, totalQuestions, name }: Share
           </svg>
           X でシェア
         </a>
-
-        {/* Facebook */}
-        <div className="flex flex-col">
-          <a
-            href={facebookUrl}
-            target="_blank"
-            rel="noreferrer"
-            className={`${btnClass} bg-[#1877F2] text-white hover:bg-[#1565C0]`}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-            </svg>
-            Facebook
-          </a>
-          <p className="text-xs font-body text-text mt-1" style={{ opacity: 0.5 }}>
-            ※ Facebookアプリからの場合はSafariで開いてからシェアしてください
-          </p>
-        </div>
 
         {/* LinkedIn */}
         <a

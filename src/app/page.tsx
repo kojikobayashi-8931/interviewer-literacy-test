@@ -118,7 +118,7 @@ export default function TopPage() {
               </button>
             </Link>
             <p className="font-body text-xs mt-3" style={{ color: "#A8D8DC", opacity: 0.6 }}>
-              無料・登録不要
+              無料
             </p>
           </div>
         </div>

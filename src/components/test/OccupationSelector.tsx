@@ -13,10 +13,11 @@ type OccupationSelectorProps = {
   onChange: (occupation: { label: string; id: string }) => void;
 };
 
-export function OccupationSelector({ value, onChange }: OccupationSelectorProps) {
+export function OccupationSelector({ value: _value, onChange }: OccupationSelectorProps) {
   const [careerId, setCareerId] = useState<string>("");
   const [groupId, setGroupId] = useState<string>("");
   const [occupationId, setOccupationId] = useState<string>("");
+  const [specialtyId, setSpecialtyId] = useState<string>("");
   const [freeText, setFreeText] = useState<string>("");
   const [isFreeText, setIsFreeText] = useState(false);
 
@@ -31,6 +32,7 @@ export function OccupationSelector({ value, onChange }: OccupationSelectorProps)
       setCareerId("none");
       setGroupId("");
       setOccupationId("");
+      setSpecialtyId("");
       onChange({ label: "", id: "" });
       return;
     }
@@ -38,6 +40,7 @@ export function OccupationSelector({ value, onChange }: OccupationSelectorProps)
     setCareerId(id);
     setGroupId("");
     setOccupationId("");
+    setSpecialtyId("");
     onChange({ label: "", id: "" });
   };
 
@@ -46,11 +49,13 @@ export function OccupationSelector({ value, onChange }: OccupationSelectorProps)
       setIsFreeText(true);
       setGroupId("none");
       setOccupationId("");
+      setSpecialtyId("");
       onChange({ label: "", id: "" });
       return;
     }
     setGroupId(id);
     setOccupationId("");
+    setSpecialtyId("");
     onChange({ label: "", id: "" });
   };
 
@@ -58,22 +63,27 @@ export function OccupationSelector({ value, onChange }: OccupationSelectorProps)
     if (id === "none") {
       setIsFreeText(true);
       setOccupationId("none");
+      setSpecialtyId("");
       onChange({ label: "", id: "" });
       return;
     }
+    const occ = occupations.find((o) => o.id === id);
     setOccupationId(id);
-    onChange({ label: "", id: "" });
+    setSpecialtyId("");
+    onChange({ label: occ?.label ?? "", id });
   };
 
   const handleSpecialty = (id: string) => {
     if (id === "none") {
       setIsFreeText(true);
+      setSpecialtyId("");
       onChange({ label: "", id: "" });
       return;
     }
-    const specialty = getSpecialties(occupationId).find((s) => s.id === id);
+    const specialty = specialties.find((s) => s.id === id);
     if (specialty) {
       setIsFreeText(false);
+      setSpecialtyId(id);
       onChange({ label: specialty.label, id: specialty.id });
     }
   };
@@ -84,7 +94,7 @@ export function OccupationSelector({ value, onChange }: OccupationSelectorProps)
   };
 
   const selectClass =
-    "w-full border-2 border-border rounded-lg px-3 py-2 text-text font-body text-sm focus:outline-none focus:border-accent bg-base";
+    "w-full border-2 border-border rounded-lg px-3 py-2 text-text font-body text-base focus:outline-none focus:border-accent bg-base";
 
   return (
     <div className="space-y-3">
@@ -155,7 +165,7 @@ export function OccupationSelector({ value, onChange }: OccupationSelectorProps)
             Step 4：専門職種（任意）
           </label>
           <select
-            value={value.id}
+            value={specialtyId}
             onChange={(e) => handleSpecialty(e.target.value)}
             className={selectClass}
           >

@@ -371,8 +371,10 @@ export function getOccupations(groupId: string): OccupationOption[] {
     .map((o) => ({ id: o.occupationId, label: o.occupationLabel, groupId: o.groupId }));
 }
 
-export function getSpecialties(occupationId: string, groupId: string): SpecialtyOption[] {
-  return OCCUPATIONS.filter((o) => o.occupationId === occupationId && o.groupId === groupId).map((o) => ({
+export function getSpecialties(occupationId: string, groupId?: string): SpecialtyOption[] {
+  return OCCUPATIONS.filter((o) =>
+    o.occupationId === occupationId && (groupId ? o.groupId === groupId : true)
+  ).map((o) => ({
     id: o.specialtyId,
     label: o.specialtyLabel,
     occupationId: o.occupationId,

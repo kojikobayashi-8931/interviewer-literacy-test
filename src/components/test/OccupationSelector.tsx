@@ -24,7 +24,7 @@ export function OccupationSelector({ value: _value, onChange }: OccupationSelect
   const careers = getCareers();
   const groups = careerId ? getGroups(careerId) : [];
   const occupations = groupId ? getOccupations(groupId) : [];
-  const specialties = occupationId ? getSpecialties(occupationId) : [];
+  const specialties = occupationId && groupId ? getSpecialties(occupationId, groupId) : [];
 
   const handleCareer = (id: string) => {
     if (id === "none") {
